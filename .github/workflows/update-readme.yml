@@ -1,0 +1,69 @@
+name: Update README
+
+on:
+  push:
+    branches: [main]
+    paths: ['Formula/*.rb']
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate README
+        run: |
+          cat > README.md << 'HEADER'
+          # Homebrew Tap
+
+          Homebrew formulae for tools by [Helge Sverre](https://github.com/HelgeSverre).
+
+          ## Install
+
+          ```bash
+          brew tap helgesverre/tap
+          ```
+
+          ## Available Formulae
+
+          | Formula | Description | Install |
+          |---------|-------------|---------|
+          HEADER
+
+          for f in Formula/*.rb; do
+            name=$(basename "$f" .rb)
+            desc=$(grep '^ *desc ' "$f" | head -1 | sed 's/^ *desc "\(.*\)"/\1/')
+            homepage=$(grep '^ *homepage ' "$f" | head -1 | sed 's/^ *homepage "\(.*\)"/\1/')
+            if [ -n "$homepage" ]; then
+              echo "| [$name]($homepage) | $desc | \`brew install helgesverre/tap/$name\` |" >> README.md
+            else
+              echo "| $name | $desc | \`brew install helgesverre/tap/$name\` |" >> README.md
+            fi
+          done
+
+          cat >> README.md << 'FOOTER'
+
+          ## Usage
+
+          ```bash
+          # Install a formula
+          brew install helgesverre/tap/<formula-name>
+
+          # Update to latest version
+          brew update && brew upgrade helgesverre/tap/<formula-name>
+          ```
+
+          ## How It Works
+
+          Formulae are automatically published by [cargo-dist](https://github.com/axodotdev/cargo-dist) when a new version is tagged in the source repository. No manual updates needed.
+          FOOTER
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --cached --quiet || git commit -m "docs: auto-update README with current formulae"
+          git push
