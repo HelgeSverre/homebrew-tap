@@ -13,6 +13,7 @@ brew tap helgesverre/tap
 | Formula | Description | Install |
 |---------|-------------|---------|
 | [sema-lang](https://sema-lang.com) | Sema — a Lisp dialect with first-class LLM primitives | `brew install helgesverre/tap/sema-lang` |
+| [token](https://token-editor.com) | A fast, minimal multi-cursor text editor with syntax highlighting | `brew install helgesverre/tap/token` |
 
 ## Usage
 
