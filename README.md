@@ -13,6 +13,7 @@ brew tap helgesverre/tap
 | Formula | Description | Install |
 |---------|-------------|---------|
 | [sema-lang](https://sema-lang.com) | Sema — a Lisp dialect with first-class LLM primitives | `brew install helgesverre/tap/sema-lang` |
+| [sql-splitter](https://github.com/helgesverre/sql-splitter) | High-performance CLI tool for splitting large SQL dump files into individual table files | `brew install helgesverre/tap/sql-splitter` |
 | [token](https://token-editor.com) | A fast, minimal multi-cursor text editor with syntax highlighting | `brew install helgesverre/tap/token` |
 
 ## Usage
