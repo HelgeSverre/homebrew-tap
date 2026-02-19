@@ -1,20 +1,20 @@
 class Token < Formula
   desc "A fast, minimal multi-cursor text editor with syntax highlighting"
   homepage "https://token-editor.com"
-  version "0.3.17"
+  version "0.3.18"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/token/releases/download/v0.3.17/token-aarch64-apple-darwin.tar.xz"
-      sha256 "60cbd4541374eac9ebd328e4c514a23200e26efbc1d1ae4d526ba89d5c946fcd"
+      url "https://github.com/HelgeSverre/token/releases/download/v0.3.18/token-aarch64-apple-darwin.tar.xz"
+      sha256 "d5ec01f73629a295376974555f6e1000a2317a7193ebcaf861ab9ab3d2752833"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/token/releases/download/v0.3.17/token-x86_64-apple-darwin.tar.xz"
-      sha256 "e808c41feaa24b0a2fa7094673e47120073a20d89e17bc3d648e74f26fa2b423"
+      url "https://github.com/HelgeSverre/token/releases/download/v0.3.18/token-x86_64-apple-darwin.tar.xz"
+      sha256 "a3b6e1928a19ca3ecf29b131a0ab29c8be504b4332bd8e9c263b78d72b6adf5a"
     end
   end
   if OS.linux? && Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/token/releases/download/v0.3.17/token-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "3af706c234025f5c63b2950316046a8b0df8cbea646d28e9a719d5301bc60ea9"
+      url "https://github.com/HelgeSverre/token/releases/download/v0.3.18/token-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "f787c3fe39883543f2247330263fb4af48ca79cdcb35eadb1a08ac284c099440"
   end
   license "MIT"
 
@@ -41,9 +41,9 @@ class Token < Formula
   end
 
   def install
-    bin.install "token" if OS.mac? && Hardware::CPU.arm?
-    bin.install "token" if OS.mac? && Hardware::CPU.intel?
-    bin.install "token" if OS.linux? && Hardware::CPU.intel?
+    bin.install "profile_render", "screenshot", "token" if OS.mac? && Hardware::CPU.arm?
+    bin.install "profile_render", "screenshot", "token" if OS.mac? && Hardware::CPU.intel?
+    bin.install "profile_render", "screenshot", "token" if OS.linux? && Hardware::CPU.intel?
 
     install_binary_aliases!
 
