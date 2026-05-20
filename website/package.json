@@ -1,0 +1,12 @@
+{
+  "name": "homebrew-tap-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "bun run generate.ts",
+    "preview": "bun run generate.ts && open ../dist/index.html"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

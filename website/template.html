@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>helgesverre/tap — Homebrew tap</title>
+    <meta name="description" content="Homebrew formulae maintained by Helge Sverre. {{TAP_DESC}}" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='13' font-family='monospace' font-size='14'%3E%E2%96%8C%3C/text%3E%3C/svg%3E" />
+    <style>
+      :root {
+        --bg: #f7f7f5;
+        --surface: #ffffff;
+        --ink: #0f1011;
+        --ink-2: #4a4d52;
+        --ink-3: #8a8d92;
+        --rule: #e3e3e0;
+        --accent: #00b86b;
+        --accent-soft: rgba(0, 184, 107, 0.18);
+        --no: #c8c8c4;
+        --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0e0f10;
+          --surface: #16181a;
+          --ink: #f1f1ee;
+          --ink-2: #b6b8bc;
+          --ink-3: #6c7075;
+          --rule: #26282b;
+          --no: #2a2c2f;
+          --accent-soft: rgba(0, 184, 107, 0.22);
+        }
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+      body {
+        font-family: var(--mono);
+        font-feature-settings: "calt" 0, "liga" 0;
+        font-size: 14px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+      a:hover { color: var(--accent); }
+      a:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
+
+      .wrap { max-width: 920px; margin: 0 auto; padding: 48px 24px 96px; }
+
+      header.site {
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 28px;
+        margin-bottom: 36px;
+      }
+      .site-name { font-size: 13px; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; }
+      .site-name strong { color: var(--ink); font-weight: 600; }
+      h1 {
+        font-size: 28px;
+        font-weight: 600;
+        margin: 12px 0 8px;
+        letter-spacing: -0.01em;
+      }
+      .tagline { color: var(--ink-2); margin: 0 0 22px; max-width: 56ch; }
+
+      .tap-install {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        margin-top: 4px;
+      }
+      .tap-install .label {
+        color: var(--ink-3);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        flex-shrink: 0;
+      }
+      code.cmd {
+        font-family: var(--mono);
+        color: var(--accent);
+        user-select: all;
+        -webkit-user-select: all;
+        cursor: text;
+      }
+      code.cmd::before { content: "$ "; color: var(--ink-3); user-select: none; }
+
+      h2.section {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-3);
+        margin: 48px 0 16px;
+        font-weight: 500;
+      }
+
+      .formula {
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        margin-bottom: 16px;
+      }
+      .formula-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 18px;
+        padding: 18px 20px 4px;
+        align-items: baseline;
+      }
+      .formula-name {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+      }
+      .formula-name a { text-decoration: none; }
+      .formula-name a:hover { color: var(--accent); }
+      .meta {
+        display: flex;
+        gap: 10px;
+        font-size: 12px;
+        color: var(--ink-3);
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 8px;
+        border: 1px solid var(--rule);
+        border-radius: 999px;
+        font-size: 11px;
+        color: var(--ink-2);
+        background: transparent;
+      }
+      .pill.version { color: var(--ink); border-color: var(--ink-3); }
+
+      .formula-desc {
+        padding: 4px 20px 16px;
+        color: var(--ink-2);
+        max-width: 70ch;
+      }
+
+      .formula-install {
+        padding: 12px 20px;
+        background: transparent;
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .formula-foot {
+        padding: 14px 20px;
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        align-items: center;
+        font-size: 12px;
+        color: var(--ink-3);
+      }
+      .formula-foot a { color: var(--ink-2); }
+
+      table.platforms {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        margin-top: 4px;
+      }
+      table.platforms th,
+      table.platforms td {
+        padding: 6px 10px;
+        text-align: center;
+        border-bottom: 1px solid var(--rule);
+      }
+      table.platforms th {
+        font-weight: 500;
+        color: var(--ink-3);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 10px;
+      }
+      table.platforms td:first-child,
+      table.platforms th:first-child {
+        text-align: left;
+        color: var(--ink-2);
+      }
+      .tick { color: var(--accent); font-weight: 600; }
+      .nope { color: var(--no); }
+
+      details.shas {
+        padding: 0 20px 14px;
+      }
+      details.shas > summary {
+        cursor: pointer;
+        list-style: none;
+        font-size: 12px;
+        color: var(--ink-3);
+        padding: 8px 0;
+        user-select: none;
+      }
+      details.shas > summary::before {
+        content: "▸ ";
+        display: inline-block;
+        width: 1em;
+        color: var(--ink-3);
+      }
+      details.shas[open] > summary::before { content: "▾ "; }
+      .sha-list { margin: 0; padding: 0; list-style: none; font-size: 12px; }
+      .sha-list li {
+        padding: 6px 0;
+        border-top: 1px dashed var(--rule);
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 14px;
+        color: var(--ink-2);
+        word-break: break-all;
+      }
+      .sha-list .triple { color: var(--ink-3); }
+      .sha-list code { user-select: all; -webkit-user-select: all; }
+
+      footer.site {
+        margin-top: 64px;
+        padding-top: 24px;
+        border-top: 1px solid var(--rule);
+        font-size: 12px;
+        color: var(--ink-3);
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      footer.site a { color: var(--ink-3); }
+
+      @media (max-width: 560px) {
+        .wrap { padding: 28px 16px 64px; }
+        .formula-head { grid-template-columns: 1fr; }
+        .meta { justify-content: flex-start; }
+        .sha-list li { grid-template-columns: 1fr; gap: 2px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site">
+        <div class="site-name"><strong>helgesverre</strong>/tap</div>
+        <h1>Homebrew tap</h1>
+        <p class="tagline">Small developer tools maintained by Helge Sverre. One tap, {{FORMULA_COUNT}} formulae, signed release artifacts.</p>
+        <div class="tap-install">
+          <span class="label">Tap</span>
+          <code class="cmd">brew tap helgesverre/tap</code>
+        </div>
+      </header>
+
+      <h2 class="section">Formulae · {{FORMULA_COUNT}}</h2>
+
+      {{FORMULAS_HTML}}
+
+      <footer class="site">
+        <div>
+          <a href="https://github.com/HelgeSverre/homebrew-tap">github.com/HelgeSverre/homebrew-tap</a>
+        </div>
+        <div>Updated {{UPDATED_AT}} · auto-generated</div>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<!--
+  FORMULA_CARD_TEMPLATE — extracted by website/generate.ts, not part of output.
+-->
+<template id="formula-card">
+<article class="formula" id="{{ID}}">
+  <div class="formula-head">
+    <div class="formula-name"><a href="#{{ID}}">{{NAME}}</a></div>
+    <div class="meta">
+      <span class="pill version">v{{VERSION}}</span>
+      <span class="pill">{{LICENSE}}</span>
+    </div>
+  </div>
+  <p class="formula-desc">{{DESC}}</p>
+  <div class="formula-install">
+    <code class="cmd">brew install helgesverre/tap/{{NAME}}</code>
+  </div>
+  <div style="padding: 14px 20px 4px;">
+    <table class="platforms">
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>arm64</th>
+          <th>x86_64</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>macOS</td>
+          <td>{{MAC_ARM}}</td>
+          <td>{{MAC_X64}}</td>
+        </tr>
+        <tr>
+          <td>Linux</td>
+          <td>{{LINUX_ARM}}</td>
+          <td>{{LINUX_X64}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <details class="shas">
+    <summary>SHA256 checksums</summary>
+    <ul class="sha-list">
+      {{SHA_ROWS}}
+    </ul>
+  </details>
+  <div class="formula-foot">
+    {{FOOT_LINKS}}
+  </div>
+</article>
+</template>
