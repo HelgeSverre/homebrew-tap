@@ -34,6 +34,8 @@ jobs:
       - name: Generate site
         run: bun run website/generate.ts
       - uses: actions/configure-pages@v6
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
