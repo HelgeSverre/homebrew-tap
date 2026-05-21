@@ -52,9 +52,28 @@ function readFieldOpt(src: string, field: string): string | undefined {
   return src.match(re)?.[1];
 }
 
+// Short-form OS/arch tokens used by some projects (e.g. glue: glue-macos-arm64.tar.gz)
+// mapped to the canonical Rust triples used elsewhere in the site.
+const SHORT_FORM_TO_TRIPLE: Record<string, Triple> = {
+  "macos-arm64": "aarch64-apple-darwin",
+  "macos-x64": "x86_64-apple-darwin",
+  "linux-arm64": "aarch64-unknown-linux-gnu",
+  "linux-x64": "x86_64-unknown-linux-gnu",
+};
+
+function tripleForUrl(url: string): Triple | undefined {
+  const t = ALL_TRIPLES.find((t) => url.includes(`-${t}.tar.`));
+  if (t) return t;
+  for (const [short, triple] of Object.entries(SHORT_FORM_TO_TRIPLE)) {
+    if (url.includes(`-${short}.tar.`)) return triple;
+  }
+  return undefined;
+}
+
 function parseArtifacts(src: string): Map<Triple, { url: string; sha256: string }> {
   // Pair every `url "..."` with the next `sha256 "..."` on a subsequent line.
-  // Each url filename ends in `<triple>.tar.xz` — we extract the triple from there.
+  // Each url filename ends in `<triple>.tar.<ext>` (Rust triple) or
+  // `<os>-<arch>.tar.<ext>` short form — both are mapped to a Rust triple.
   const out = new Map<Triple, { url: string; sha256: string }>();
   const tokenRe = /^\s*(url|sha256)\s+"([^"]+)"/gm;
   let pendingUrl: string | undefined;
@@ -64,7 +83,7 @@ function parseArtifacts(src: string): Map<Triple, { url: string; sha256: string 
     if (kind === "url") {
       pendingUrl = value;
     } else if (kind === "sha256" && pendingUrl) {
-      const triple = ALL_TRIPLES.find((t) => pendingUrl!.includes(`-${t}.tar.`));
+      const triple = tripleForUrl(pendingUrl);
       if (triple) out.set(triple, { url: pendingUrl, sha256: value });
       pendingUrl = undefined;
     }
@@ -73,8 +92,11 @@ function parseArtifacts(src: string): Map<Triple, { url: string; sha256: string 
 }
 
 function deriveSourceRepo(anyUrl: string): { repo: string; releaseUrl: string; binaryName: string } {
-  // e.g. https://github.com/HelgeSverre/fedit/releases/download/v0.0.1-test/fedit-aarch64-apple-darwin.tar.xz
-  const m = anyUrl.match(/^(https:\/\/github\.com\/[^/]+\/[^/]+)\/releases\/download\/(v[^/]+)\/([^/]+)-[a-z0-9_]+-[a-z0-9_]+-[a-z0-9_]+\.tar\.[a-z]+$/);
+  // Matches either of:
+  //   .../<name>-<cpu>-<vendor>-<os>.tar.<ext>     (Rust triple form, e.g. fedit-aarch64-apple-darwin.tar.xz)
+  //   .../<name>-<os>-<arch>.tar.<ext>             (short form,        e.g. glue-macos-arm64.tar.gz)
+  const re = /^(https:\/\/github\.com\/[^/]+\/[^/]+)\/releases\/download\/(v[^/]+)\/([^/]+?)-(?:[a-z0-9_]+-[a-z0-9_]+-[a-z0-9_]+|(?:macos|linux)-(?:arm64|x64))\.tar\.[a-z]+$/;
+  const m = anyUrl.match(re);
   if (!m) throw new Error(`cannot parse release url: ${anyUrl}`);
   return { repo: m[1], releaseUrl: `${m[1]}/releases/tag/${m[2]}`, binaryName: m[3] };
 }
