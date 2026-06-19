@@ -1,31 +1,34 @@
 class Fedit < Formula
   desc "A small terminal text editor written in F#"
   homepage "https://github.com/HelgeSverre/fedit"
-  version "1.4.0"
+  version "1.5.0"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/fedit/releases/download/v1.4.0/fedit-aarch64-apple-darwin.tar.xz"
-      sha256 "0efb7a46cfd704f77d9f46f89df543af61fb8fc28acd26c992fe4d4fd1d1ab23"
+      url "https://github.com/HelgeSverre/fedit/releases/download/v1.5.0/fedit-aarch64-apple-darwin.tar.xz"
+      sha256 "757f08f08f69e96307ff1fd3aa50836c98798ac8cf30697da452ca8bd4d1624e"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/fedit/releases/download/v1.4.0/fedit-x86_64-apple-darwin.tar.xz"
-      sha256 "32bb688f07d9f8854686dfa561f30f73445b765e6fcd6626cbb873c03c707eed"
+      url "https://github.com/HelgeSverre/fedit/releases/download/v1.5.0/fedit-x86_64-apple-darwin.tar.xz"
+      sha256 "4ff83097a31b6d9731848228770b50f4932d5593229e241b0b5bf29a773a3f90"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/fedit/releases/download/v1.4.0/fedit-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "eece65c23a9b3c0ea80d3105bbb20394260c1d579d4815ba7b452f02b7489e7a"
+      url "https://github.com/HelgeSverre/fedit/releases/download/v1.5.0/fedit-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "a6cee51b42b4707666bf1b9bf698acc20dd47c222059e832ddcaca7ade441ac3"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/fedit/releases/download/v1.4.0/fedit-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "27fd2a7491396fffa5ab3fc1bcb069d07c8e5fcfef6d2fc29f14446cac8b262e"
+      url "https://github.com/HelgeSverre/fedit/releases/download/v1.5.0/fedit-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "abed5edbabf97379a49c335eedd13ee4473d015ce5e89bab6fe5528958107c2a"
     end
   end
   license "MIT"
 
   def install
     libexec.install "fedit"
+    # The out-of-process plugin host must sit beside the editor — fedit spawns
+    # it to load plugins. Without it, plugins silently fail to load.
+    libexec.install "Fedit.PluginHost" if File.exist?("Fedit.PluginHost")
     libexec.install "Fedit.PluginApi.dll" if File.exist?("Fedit.PluginApi.dll")
     libexec.install "runtimes" if Dir.exist?("runtimes")
     bin.write_exec_script libexec/"fedit"
