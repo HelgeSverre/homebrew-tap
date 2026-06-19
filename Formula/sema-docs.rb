@@ -1,24 +1,24 @@
 class SemaDocs < Formula
   desc "Canonical structured documentation for Sema builtins/special forms; powers LSP hover/completion and REPL apropos"
-  version "1.17.0"
+  version "1.18.0"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/sema/releases/download/v1.17.0/sema-docs-aarch64-apple-darwin.tar.xz"
-      sha256 "f73d253fb399919fe006c04d39f714d6c330a5f2d96454180864306e5cad7c88"
+      url "https://github.com/HelgeSverre/sema/releases/download/v1.18.0/sema-docs-aarch64-apple-darwin.tar.xz"
+      sha256 "563b7bde176d4728eba14d92eab2a737e0c023fbf59d67b176367c37f8cc679d"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/sema/releases/download/v1.17.0/sema-docs-x86_64-apple-darwin.tar.xz"
-      sha256 "f31732f1f640c6a59aeaa43a0700d27f77a48924d6cb14fecf478db8b9539723"
+      url "https://github.com/HelgeSverre/sema/releases/download/v1.18.0/sema-docs-x86_64-apple-darwin.tar.xz"
+      sha256 "76c81b6422766522ae95e0c0a8a8920b05d158292ce5f6af837088fe02dd077b"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/sema/releases/download/v1.17.0/sema-docs-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "3537ceedbd0fe1d4a2f5df29fa34a1a7adda9ebb49820e3fee54cfdae814b3a2"
+      url "https://github.com/HelgeSverre/sema/releases/download/v1.18.0/sema-docs-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "895369400c5cda1bb529ee047a6e09b54a8771d2e34c51171d8f0f5f7f5fbd81"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/sema/releases/download/v1.17.0/sema-docs-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "f2128ad014691e125fd90a0c52a7d6a64635d2d34d6f30436b5a5ac4615e2b08"
+      url "https://github.com/HelgeSverre/sema/releases/download/v1.18.0/sema-docs-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "87f99dc9e92db465c666f8cd46758c9c9aba4508cac66d0a88f082ccf0ea82ce"
     end
   end
   license "MIT"
