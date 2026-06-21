@@ -1,25 +1,25 @@
 class SemaLang < Formula
   desc "Sema — a Lisp dialect with first-class LLM primitives"
   homepage "https://sema-lang.com"
-  version "1.20.4"
+  version "1.21.1"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/sema/releases/download/v1.20.4/sema-lang-aarch64-apple-darwin.tar.xz"
-      sha256 "592c6332aa27336e489878f0fca7f121db8324deb4cdeb6159a0e8865512f79c"
+      url "https://github.com/HelgeSverre/sema/releases/download/v1.21.1/sema-lang-aarch64-apple-darwin.tar.xz"
+      sha256 "9af9e12cd1d679a0c2c73a49e36876f506a7f0569b2c62eb43c102d526439543"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/sema/releases/download/v1.20.4/sema-lang-x86_64-apple-darwin.tar.xz"
-      sha256 "220fefbe51b7e4d94bb3b05d7b4b38bd910b960ea3c0c1a444bfb24f5f81947a"
+      url "https://github.com/HelgeSverre/sema/releases/download/v1.21.1/sema-lang-x86_64-apple-darwin.tar.xz"
+      sha256 "72e2b696d92246b5f013cf181c7f2c95ac4553345ec544aa5d2b4fc4cf63f7c5"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/sema/releases/download/v1.20.4/sema-lang-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "66823b2d89c4985bc1e388126689581b78c8542c6d3d91f0081dadd700f3f33e"
+      url "https://github.com/HelgeSverre/sema/releases/download/v1.21.1/sema-lang-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "3599079e685c7c5d976172eb2797f3b7b61766f0c5d134cfe6af2f905cb8a5b7"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/sema/releases/download/v1.20.4/sema-lang-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "84640fb0d998791c2c1a866f9095abb046af45a7ce076ca699ea1de09bcfc23c"
+      url "https://github.com/HelgeSverre/sema/releases/download/v1.21.1/sema-lang-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "6481bf87e7dbf35333340c5cf38560853e4a295f8b496b1ad686c0de66b1a109"
     end
   end
   license "MIT"
