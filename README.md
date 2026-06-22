@@ -12,6 +12,7 @@ brew tap helgesverre/tap
 
 | Formula | Description | Install |
 |---------|-------------|---------|
+| [dbdump](https://github.com/helgesverre/dbdump) | Intelligent MySQL database dumping tool | `brew install helgesverre/tap/dbdump` |
 | [fedit](https://github.com/HelgeSverre/fedit) | A small terminal text editor written in F# | `brew install helgesverre/tap/fedit` |
 | [glue](https://getglue.dev) | Terminal-native coding agent | `brew install helgesverre/tap/glue` |
 | [sema-lang](https://sema-lang.com) | Sema — a Lisp dialect with first-class LLM primitives | `brew install helgesverre/tap/sema-lang` |
