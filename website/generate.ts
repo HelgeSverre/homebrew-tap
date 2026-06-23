@@ -20,16 +20,9 @@ type Triple =
   | "aarch64-unknown-linux-gnu"
   | "x86_64-unknown-linux-gnu";
 
-const ALL_TRIPLES: Triple[] = [
-  "aarch64-apple-darwin",
-  "x86_64-apple-darwin",
-  "aarch64-unknown-linux-gnu",
-  "x86_64-unknown-linux-gnu",
-];
-
 interface Formula {
   id: string;             // basename without .rb
-  name: string;           // first url's binary-name segment (matches install line)
+  name: string;           // display/install name == formula id (the .rb basename)
   desc: string;
   homepage: string;
   version: string;
@@ -52,20 +45,44 @@ function readFieldOpt(src: string, field: string): string | undefined {
   return src.match(re)?.[1];
 }
 
-// Short-form OS/arch tokens used by some projects (e.g. glue: glue-macos-arm64.tar.gz)
-// mapped to the canonical Rust triples used elsewhere in the site.
-const SHORT_FORM_TO_TRIPLE: Record<string, Triple> = {
+// Platform suffix (on the extension-stripped asset filename) -> canonical Rust triple.
+// Covers cargo-dist triples (fedit, sema, token, sql-splitter), Go-style GOOS-GOARCH
+// (dbdump: darwin-arm64), Zig-style os-aarch64/x86_64 (jake: macos-aarch64), and the
+// short os-arch form (glue: macos-arm64), so the site renders tools regardless of how
+// their release assets are named or whether they are archives or raw binaries.
+const SUFFIX_TO_TRIPLE: Record<string, Triple> = {
+  // cargo-dist target triples
+  "aarch64-apple-darwin": "aarch64-apple-darwin",
+  "x86_64-apple-darwin": "x86_64-apple-darwin",
+  "aarch64-unknown-linux-gnu": "aarch64-unknown-linux-gnu",
+  "x86_64-unknown-linux-gnu": "x86_64-unknown-linux-gnu",
+  // Go style (GOOS-GOARCH)
+  "darwin-arm64": "aarch64-apple-darwin",
+  "darwin-amd64": "x86_64-apple-darwin",
+  "linux-arm64": "aarch64-unknown-linux-gnu",
+  "linux-amd64": "x86_64-unknown-linux-gnu",
+  // Zig style (os + aarch64/x86_64)
+  "macos-aarch64": "aarch64-apple-darwin",
+  "macos-x86_64": "x86_64-apple-darwin",
+  "linux-aarch64": "aarch64-unknown-linux-gnu",
+  "linux-x86_64": "x86_64-unknown-linux-gnu",
+  // Short os-arch form
   "macos-arm64": "aarch64-apple-darwin",
   "macos-x64": "x86_64-apple-darwin",
-  "linux-arm64": "aarch64-unknown-linux-gnu",
   "linux-x64": "x86_64-unknown-linux-gnu",
 };
 
+// Longest suffix first so the most specific match wins.
+const SUFFIXES_BY_LENGTH = Object.keys(SUFFIX_TO_TRIPLE).sort((a, b) => b.length - a.length);
+
+function stripArchiveExt(name: string): string {
+  return name.replace(/\.(tar\.[a-z0-9]+|tgz|tbz2?|zip)$/i, "");
+}
+
 function tripleForUrl(url: string): Triple | undefined {
-  const t = ALL_TRIPLES.find((t) => url.includes(`-${t}.tar.`));
-  if (t) return t;
-  for (const [short, triple] of Object.entries(SHORT_FORM_TO_TRIPLE)) {
-    if (url.includes(`-${short}.tar.`)) return triple;
+  const stem = stripArchiveExt(basename(url));
+  for (const suffix of SUFFIXES_BY_LENGTH) {
+    if (stem === suffix || stem.endsWith(`-${suffix}`)) return SUFFIX_TO_TRIPLE[suffix];
   }
   return undefined;
 }
@@ -91,14 +108,13 @@ function parseArtifacts(src: string): Map<Triple, { url: string; sha256: string 
   return out;
 }
 
-function deriveSourceRepo(anyUrl: string): { repo: string; releaseUrl: string; binaryName: string } {
-  // Matches either of:
-  //   .../<name>-<cpu>-<vendor>-<os>.tar.<ext>     (Rust triple form, e.g. fedit-aarch64-apple-darwin.tar.xz)
-  //   .../<name>-<os>-<arch>.tar.<ext>             (short form,        e.g. glue-macos-arm64.tar.gz)
-  const re = /^(https:\/\/github\.com\/[^/]+\/[^/]+)\/releases\/download\/(v[^/]+)\/([^/]+?)-(?:[a-z0-9_]+-[a-z0-9_]+-[a-z0-9_]+|(?:macos|linux)-(?:arm64|x64))\.tar\.[a-z]+$/;
+function deriveSourceRepo(anyUrl: string): { repo: string; releaseUrl: string } {
+  // https://github.com/<owner>/<repo>/releases/download/<tag>/<asset>
+  // Independent of asset naming so it works for archives and raw binaries alike.
+  const re = /^(https:\/\/github\.com\/[^/]+\/[^/]+)\/releases\/download\/([^/]+)\//;
   const m = anyUrl.match(re);
   if (!m) throw new Error(`cannot parse release url: ${anyUrl}`);
-  return { repo: m[1], releaseUrl: `${m[1]}/releases/tag/${m[2]}`, binaryName: m[3] };
+  return { repo: m[1], releaseUrl: `${m[1]}/releases/tag/${m[2]}` };
 }
 
 function loadFormula(file: string): Formula {
@@ -107,10 +123,10 @@ function loadFormula(file: string): Formula {
   const artifacts = parseArtifacts(src);
   if (artifacts.size === 0) throw new Error(`${id}: no url/sha256 pairs found`);
   const anyUrl = artifacts.values().next().value!.url;
-  const { repo, releaseUrl, binaryName } = deriveSourceRepo(anyUrl);
+  const { repo, releaseUrl } = deriveSourceRepo(anyUrl);
   return {
     id,
-    name: binaryName,
+    name: id,
     desc: readField(src, "desc"),
     homepage: readField(src, "homepage"),
     version: readField(src, "version"),
