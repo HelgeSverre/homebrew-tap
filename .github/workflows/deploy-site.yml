@@ -31,6 +31,9 @@ jobs:
       - name: Install website deps
         working-directory: website
         run: bun install --frozen-lockfile
+      - name: Test parser
+        working-directory: website
+        run: bun test
       - name: Generate site
         run: bun run website/generate.ts
       - uses: actions/configure-pages@v6
