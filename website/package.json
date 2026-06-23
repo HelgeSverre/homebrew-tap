@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "generate": "bun run generate.ts",
-    "preview": "bun run generate.ts && open ../dist/index.html"
+    "preview": "bun run generate.ts && open ../dist/index.html",
+    "test": "bun test"
   },
   "devDependencies": {
     "@types/bun": "latest"
