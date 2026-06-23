@@ -1,319 +1,221 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>helgesverre/tap — Homebrew tap</title>
-    <meta name="description" content="Homebrew formulae maintained by Helge Sverre. {{TAP_DESC}}" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='13' font-family='monospace' font-size='14'%3E%E2%96%8C%3C/text%3E%3C/svg%3E" />
-    <style>
-      :root {
-        --bg: #f7f7f5;
-        --surface: #ffffff;
-        --ink: #0f1011;
-        --ink-2: #4a4d52;
-        --ink-3: #8a8d92;
-        --rule: #e3e3e0;
-        --accent: #00b86b;
-        --accent-soft: rgba(0, 184, 107, 0.18);
-        --no: #c8c8c4;
-        --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-      }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #0e0f10;
-          --surface: #16181a;
-          --ink: #f1f1ee;
-          --ink-2: #b6b8bc;
-          --ink-3: #6c7075;
-          --rule: #26282b;
-          --no: #2a2c2f;
-          --accent-soft: rgba(0, 184, 107, 0.22);
-        }
-      }
-      * { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
-      body {
-        font-family: var(--mono);
-        font-feature-settings: "calt" 0, "liga" 0;
-        font-size: 14px;
-        line-height: 1.55;
-        -webkit-font-smoothing: antialiased;
-      }
-      a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-      a:hover { color: var(--accent); }
-      a:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{TITLE}} — Homebrew tap</title>
+<meta name="description" content="Homebrew formulae maintained by Helge Sverre. {{COUNT}} command-line tools for macOS and Linux, one tap." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23000'/%3E%3Ctext x='8' y='13' text-anchor='middle' font-family='monospace' font-size='13' fill='%23ffcc00'%3E%E2%96%AE%3C/text%3E%3C/svg%3E" />
+<style>
+  /* Teletext palette — lifted from the profile renderer (src/template.mjs) */
+  :root{
+    --k:#000; --r:#ff3b30; --g:#33ff33; --y:#ffcc00; --b:#3b6bff;
+    --m:#ff6bff; --c:#00ffff; --w:#fff; --dim:#4a4a4a;
+    --tt: "Bedstead", ui-monospace, "Cascadia Mono", "DejaVu Sans Mono", Menlo, monospace;
+    /* shared column track so header + every row align perfectly */
+    --cols: 50px 1fr 70px 30px 30px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#000;}
+  body{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:24px 14px; font-family:var(--tt);
+  }
+  a{color:inherit;text-decoration:none;}
 
-      .wrap { max-width: 920px; margin: 0 auto; padding: 48px 24px 96px; }
+  .screen{
+    position:relative; width:100%; max-width:700px; background:#000; color:var(--w);
+    padding:18px 20px; font-size:16px; line-height:1.5;
+    letter-spacing:.02em; border-radius:7px; overflow:hidden;
+    box-shadow:0 0 0 2px #1a1a1a, 0 24px 70px rgba(0,0,0,.8);
+  }
+  .screen::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:5;
+    background:repeating-linear-gradient(to bottom,transparent 0 2px,rgba(0,0,0,.32) 2px 4px);}
+  .screen::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:6;
+    background:radial-gradient(ellipse 92% 88% at 50% 46%,transparent 54%,rgba(0,0,0,.8) 100%);}
 
-      header.site {
-        border-bottom: 1px solid var(--rule);
-        padding-bottom: 28px;
-        margin-bottom: 36px;
-      }
-      .site-name { font-size: 13px; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; }
-      .site-name strong { color: var(--ink); font-weight: 600; }
-      h1 {
-        font-size: 28px;
-        font-weight: 600;
-        margin: 12px 0 8px;
-        letter-spacing: -0.01em;
-      }
-      .tagline { color: var(--ink-2); margin: 0 0 22px; max-width: 56ch; }
+  .statusbar{display:flex;justify-content:space-between;align-items:baseline;
+    color:var(--c);font-size:14px;letter-spacing:.06em;}
+  .statusbar .pg{color:var(--g);}
+  .statusbar .pg b{color:var(--w);}
+  .statusbar .clk{color:var(--y);font-variant-numeric:tabular-nums;}
 
-      .tap-install {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 14px 16px;
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 4px;
-        margin-top: 4px;
-      }
-      .tap-install .label {
-        color: var(--ink-3);
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        flex-shrink: 0;
-      }
-      code.cmd {
-        font-family: var(--mono);
-        color: var(--accent);
-        user-select: all;
-        -webkit-user-select: all;
-        cursor: text;
-      }
-      code.cmd::before { content: "$ "; color: var(--ink-3); user-select: none; }
+  .stripe{height:16px;margin:12px -20px 0;
+    background:linear-gradient(to right,
+      var(--r) 0 14.28%, var(--y) 14.28% 28.57%, var(--g) 28.57% 42.85%,
+      var(--c) 42.85% 57.14%, var(--b) 57.14% 71.42%, var(--m) 71.42% 85.71%, var(--w) 85.71% 100%);}
 
-      h2.section {
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--ink-3);
-        margin: 48px 0 16px;
-        font-weight: 500;
-      }
+  .title{color:var(--y);font-size:34px;line-height:1.04;letter-spacing:.01em;
+    text-shadow:0 0 10px var(--y),0 0 2px var(--y);margin:20px 0 4px;}
+  .subtitle{color:var(--c);font-size:14px;margin:0 0 20px;}
 
-      .formula {
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 4px;
-        margin-bottom: 16px;
-      }
-      .formula-head {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 18px;
-        padding: 18px 20px 4px;
-        align-items: baseline;
-      }
-      .formula-name {
-        font-size: 18px;
-        font-weight: 600;
-        letter-spacing: -0.005em;
-      }
-      .formula-name a { text-decoration: none; }
-      .formula-name a:hover { color: var(--accent); }
-      .meta {
-        display: flex;
-        gap: 10px;
-        font-size: 12px;
-        color: var(--ink-3);
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-      }
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 2px 8px;
-        border: 1px solid var(--rule);
-        border-radius: 999px;
-        font-size: 11px;
-        color: var(--ink-2);
-        background: transparent;
-      }
-      .pill.version { color: var(--ink); border-color: var(--ink-3); }
+  /* ---- index ---- */
+  .index{margin:0;}
+  .ihead{display:grid;grid-template-columns:var(--cols);gap:10px;
+    color:var(--b);font-size:13px;letter-spacing:.06em;padding:0 2px 6px;
+    border-bottom:1px solid #16270f;}
+  .ihead .rt{text-align:right;} .ihead .ct{text-align:center;}
 
-      .formula-desc {
-        padding: 4px 20px 16px;
-        color: var(--ink-2);
-        max-width: 70ch;
-      }
+  .item{border-bottom:1px solid #0e0e0e;transition:background .18s ease, box-shadow .18s ease;}
+  .irow{display:grid;grid-template-columns:var(--cols);gap:10px;align-items:baseline;
+    padding:6px 2px;cursor:pointer;}
+  .irow:hover{background:rgba(0,255,255,.10);}
+  .item.open{background:rgba(0,255,255,.055);}
+  .item.open .irow{background:rgba(0,255,255,.09);}
+  .irow .num{color:var(--g);font-variant-numeric:tabular-nums;}
+  /* name never shrinks; description truncates to fill the rest of ONE line.
+     min-width:0 on both the grid cell and the flex child is what lets it clip
+     instead of wrapping and blowing out the row height. */
+  .irow .nmwrap{display:flex;align-items:baseline;gap:8px;min-width:0;}
+  .irow .nm{color:var(--y);flex:0 0 auto;white-space:nowrap;}
+  .irow .nm .ar{color:var(--c);display:inline-block;width:1ch;transition:transform .12s;}
+  .item.open .irow .nm .ar{transform:rotate(90deg);}
+  .irow .ds{color:var(--w);font-size:13px;opacity:.9;flex:1 1 auto;min-width:0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .irow .ver{color:var(--c);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  /* mac / lnx: each its own fixed centered column => always aligned */
+  .irow .pf{text-align:center;}
+  .irow .pf .on{color:var(--g);} .irow .pf .no{color:var(--dim);}
 
-      .formula-install {
-        padding: 12px 20px;
-        background: transparent;
-        border-top: 1px solid var(--rule);
-        border-bottom: 1px solid var(--rule);
-      }
+  /* ---- drawer (animated height via grid-template-rows 0fr->1fr) ---- */
+  .drawer{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease;}
+  .item.open .drawer{grid-template-rows:1fr;}
+  .dwrap{overflow:hidden;min-height:0;}
+  .dbody{padding:0 14px 14px;opacity:0;transform:translateY(-3px);
+    transition:opacity .22s ease .05s, transform .22s ease .05s;}
+  .item.open .dbody{opacity:1;transform:none;}
+  /* full (untruncated) description — the row only shows an ellipsised version */
+  .dfull{color:var(--w);opacity:.9;font-size:13px;padding-top:14px;}
 
-      .formula-foot {
-        padding: 14px 20px;
-        display: flex;
-        gap: 24px;
-        flex-wrap: wrap;
-        align-items: center;
-        font-size: 12px;
-        color: var(--ink-3);
-      }
-      .formula-foot a { color: var(--ink-2); }
+  .cmd-copy{border:1px solid var(--g);border-radius:3px;padding:8px 11px;margin:14px 0;
+    cursor:pointer;display:flex;align-items:center;gap:10px;}
+  .cmd-copy:hover{background:rgba(51,255,51,.08);}
+  .cmd-copy .cmd{color:var(--w);font-size:16px;}
+  .cmd-copy .cmd::before{content:"> ";color:var(--g);}
+  .cmd-copy .tag{margin-left:auto;color:var(--g);font-size:12px;letter-spacing:.08em;white-space:nowrap;}
+  .cmd-copy.flash{border-color:var(--y);}
+  .cmd-copy.flash .cmd{color:var(--y);} .cmd-copy.flash .tag{color:var(--y);}
 
-      table.platforms {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 12px;
-        margin-top: 4px;
-      }
-      table.platforms th,
-      table.platforms td {
-        padding: 6px 10px;
-        text-align: center;
-        border-bottom: 1px solid var(--rule);
-      }
-      table.platforms th {
-        font-weight: 500;
-        color: var(--ink-3);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-size: 10px;
-      }
-      table.platforms td:first-child,
-      table.platforms th:first-child {
-        text-align: left;
-        color: var(--ink-2);
-      }
-      .tick { color: var(--accent); font-weight: 600; }
-      .nope { color: var(--no); }
+  /* detail laid out as labelled columns */
+  .dcols{display:flex;flex-wrap:wrap;gap:16px 48px;}
+  .dlab{color:var(--b);font-size:12px;letter-spacing:.16em;margin:0 0 7px;}
+  .matrix{display:grid;grid-template-columns:auto auto auto;gap:4px 20px;font-size:13px;width:max-content;}
+  .matrix .h{color:var(--dim);letter-spacing:.05em;}
+  .matrix .os{color:var(--w);} .matrix .yes{color:var(--g);} .matrix .nope{color:var(--dim);}
+  .links{display:flex;flex-direction:column;gap:6px;font-size:13px;}
+  .links a{color:var(--c);} .links a:hover{text-shadow:0 0 7px var(--c);}
+  .links .lic{color:var(--dim);}
 
-      details.shas {
-        padding: 0 20px 14px;
-      }
-      details.shas > summary {
-        cursor: pointer;
-        list-style: none;
-        font-size: 12px;
-        color: var(--ink-3);
-        padding: 8px 0;
-        user-select: none;
-      }
-      details.shas > summary::before {
-        content: "▸ ";
-        display: inline-block;
-        width: 1em;
-        color: var(--ink-3);
-      }
-      details.shas[open] > summary::before { content: "▾ "; }
-      .sha-list { margin: 0; padding: 0; list-style: none; font-size: 12px; }
-      .sha-list li {
-        padding: 6px 0;
-        border-top: 1px dashed var(--rule);
-        display: grid;
-        grid-template-columns: 200px 1fr;
-        gap: 14px;
-        color: var(--ink-2);
-        word-break: break-all;
-      }
-      .sha-list .triple { color: var(--ink-3); }
-      .sha-list code { user-select: all; -webkit-user-select: all; }
+  /* ---- tap command ---- */
+  .cmdbox{margin:20px 0 0;border:2px solid var(--g);padding:9px 12px;border-radius:3px;cursor:pointer;}
+  .cmdbox:hover{background:rgba(51,255,51,.06);}
+  .cmdbox .lab{color:var(--g);font-size:12px;letter-spacing:.1em;display:flex;justify-content:space-between;margin-bottom:2px;}
+  .cmdbox .cmd{color:var(--w);font-size:16px;}
+  .cmdbox .cmd::before{content:"> ";color:var(--g);}
+  .cmdbox.flash{border-color:var(--y);}
+  .cmdbox.flash .cmd{color:var(--y);} .cmdbox.flash .lab{color:var(--y);}
 
-      footer.site {
-        margin-top: 64px;
-        padding-top: 24px;
-        border-top: 1px solid var(--rule);
-        font-size: 12px;
-        color: var(--ink-3);
-        display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        flex-wrap: wrap;
-      }
-      footer.site a { color: var(--ink-3); }
+  .fastext{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;}
+  .ft{padding:7px 6px;text-align:center;color:#000;font-size:13px;letter-spacing:.04em;border-radius:2px;}
+  .ft.r{background:var(--r);} .ft.g{background:var(--g);}
+  .ft.y{background:var(--y);} .ft.c{background:var(--c);}
+  .ft:hover{filter:brightness(1.18);}
 
-      @media (max-width: 560px) {
-        .wrap { padding: 28px 16px 64px; }
-        .formula-head { grid-template-columns: 1fr; }
-        .meta { justify-content: flex-start; }
-        .sha-list li { grid-template-columns: 1fr; gap: 2px; }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <header class="site">
-        <div class="site-name"><strong>helgesverre</strong>/tap</div>
-        <h1>Homebrew tap</h1>
-        <p class="tagline">Small developer tools maintained by Helge Sverre. One tap, {{FORMULA_COUNT}} formulae, signed release artifacts.</p>
-        <div class="tap-install">
-          <span class="label">Tap</span>
-          <code class="cmd">brew tap helgesverre/tap</code>
-        </div>
-      </header>
+  @media (max-width:560px){
+    .screen{font-size:15px;padding:16px;}
+    .title{font-size:27px;}
+    :root{--cols: 42px 1fr 58px 26px 26px;}
+  }
+</style>
+</head>
+<body>
+<div class="screen" id="screen">
+  <div class="statusbar">
+    <span class="pg">P200 <b>HOMEBREW</b></span>
+    <span class="clk">{{CLOCK}}</span>
+  </div>
 
-      <h2 class="section">Formulae · {{FORMULA_COUNT}}</h2>
+  <div class="stripe"></div>
 
-      {{FORMULAS_HTML}}
+  <div class="title">{{TITLE}}</div>
+  <div class="subtitle">{{SUBTITLE}}</div>
 
-      <footer class="site">
-        <div>
-          <a href="https://github.com/HelgeSverre/homebrew-tap">github.com/HelgeSverre/homebrew-tap</a>
-        </div>
-        <div>Updated {{UPDATED_AT}} · auto-generated</div>
-      </footer>
+  <div class="index">
+    <div class="ihead">
+      <span>PAGE</span><span>FORMULA</span><span class="rt">VER</span>
+      <span class="ct">MAC</span><span class="ct">LNX</span>
     </div>
-  </body>
+    <div class="rows">
+{{ROWS}}
+    </div>
+  </div>
+
+  <div class="cmdbox" data-copy="brew tap {{TAP}}">
+    <span class="lab"><span>TO ADD THE TAP</span><span>CLICK TO COPY</span></span>
+    <span class="cmd">brew tap {{TAP}}</span>
+  </div>
+
+  <div class="fastext">
+    <a class="ft r" href="https://github.com/HelgeSverre/homebrew-tap">SOURCE</a>
+    <a class="ft g" href="https://helgesver.re">HELGESVER.RE</a>
+    <a class="ft y" href="https://helgesver.re/projects">PROJECTS</a>
+    <a class="ft c" href="https://github.com/HelgeSverre">GITHUB</a>
+  </div>
+</div>
+
+<script>
+  // Rows are server-rendered; this only wires interactivity (expand + copy).
+  document.getElementById("screen").addEventListener("click", function (e) {
+    var copyEl = e.target.closest("[data-copy]");
+    if (copyEl) {
+      if (navigator.clipboard) navigator.clipboard.writeText(copyEl.getAttribute("data-copy"));
+      copyEl.classList.add("flash");
+      setTimeout(function () { copyEl.classList.remove("flash"); }, 750);
+      return;
+    }
+    var row = e.target.closest(".irow");
+    if (row) row.parentElement.classList.toggle("open");
+  });
+</script>
+</body>
 </html>
 
 <!--
-  FORMULA_CARD_TEMPLATE — extracted by website/generate.ts, not part of output.
+  FORMULA_ITEM_TEMPLATE — extracted by website/generate.ts, not part of the output.
 -->
-<template id="formula-card">
-<article class="formula" id="{{ID}}">
-  <div class="formula-head">
-    <div class="formula-name"><a href="#{{ID}}">{{NAME}}</a></div>
-    <div class="meta">
-      <span class="pill version">v{{VERSION}}</span>
-      <span class="pill">{{LICENSE}}</span>
+<template id="formula-item">
+<div class="item" data-id="{{ID}}">
+  <div class="irow">
+    <span class="num">{{PAGE}}</span>
+    <span class="nmwrap"><span class="nm"><span class="ar">▸</span> {{NAME}}</span><span class="ds" title="{{DESC}}">{{DESC}}</span></span>
+    <span class="ver">{{VERSION}}</span>
+    <span class="pf">{{MAC}}</span>
+    <span class="pf">{{LNX}}</span>
+  </div>
+  <div class="drawer"><div class="dwrap"><div class="dbody">
+    <div class="dfull">{{DESC}}</div>
+    <div class="cmd-copy" data-copy="brew install {{TAP}}/{{ID}}">
+      <span class="cmd">brew install {{TAP}}/{{ID}}</span>
+      <span class="tag">CLICK TO COPY</span>
     </div>
-  </div>
-  <p class="formula-desc">{{DESC}}</p>
-  <div class="formula-install">
-    <code class="cmd">brew install helgesverre/tap/{{NAME}}</code>
-  </div>
-  <div style="padding: 14px 20px 4px;">
-    <table class="platforms">
-      <thead>
-        <tr>
-          <th>Platform</th>
-          <th>arm64</th>
-          <th>x86_64</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>macOS</td>
-          <td>{{MAC_ARM}}</td>
-          <td>{{MAC_X64}}</td>
-        </tr>
-        <tr>
-          <td>Linux</td>
-          <td>{{LINUX_ARM}}</td>
-          <td>{{LINUX_X64}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <details class="shas">
-    <summary>SHA256 checksums</summary>
-    <ul class="sha-list">
-      {{SHA_ROWS}}
-    </ul>
-  </details>
-  <div class="formula-foot">
-    {{FOOT_LINKS}}
-  </div>
-</article>
+    <div class="dcols">
+      <div class="dsec">
+        <div class="dlab">BUILDS</div>
+        <div class="matrix">
+          <span class="h"></span><span class="h">arm64</span><span class="h">x86_64</span>
+          <span class="os">macOS</span>{{MAC_ARM}}{{MAC_X64}}
+          <span class="os">Linux</span>{{LNX_ARM}}{{LNX_X64}}
+        </div>
+      </div>
+      <div class="dsec">
+        <div class="dlab">INFO</div>
+        <div class="links">
+          <a href="{{HOMEPAGE}}">↗ {{HOMEPAGE_HOST}}</a>
+          <a href="https://github.com/HelgeSverre/homebrew-tap/blob/main/Formula/{{ID}}.rb">↗ Formula source</a>
+          <span class="lic">License {{LICENSE}}</span>
+        </div>
+      </div>
+    </div>
+  </div></div></div>
+</div>
 </template>
