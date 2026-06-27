@@ -5,7 +5,6 @@
 // All parsing lives in ./parse.ts (unit-tested). This file is the IO + templating shell.
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, cpSync, existsSync } from "node:fs";
-import { execSync } from "node:child_process";
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseFormula, homepageHost, osLabel, type Formula, type Cell } from "./parse";
@@ -39,21 +38,6 @@ function loadFormulae(): Formula[] {
 function title(): string {
   // The hero/title is the site's own domain, taken from the deployed CNAME.
   return existsSync(CNAME) ? readFileSync(CNAME, "utf8").trim() : TAP;
-}
-
-function clock(): string {
-  // Decorative teletext clock, stamped from the most recent Formula commit.
-  let d: Date;
-  try {
-    const iso = execSync("git log -1 --format=%cI -- Formula/", { cwd: ROOT }).toString().trim();
-    d = iso ? new Date(iso) : new Date();
-  } catch {
-    d = new Date();
-  }
-  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-  const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-  const p2 = (n: number) => String(n).padStart(2, "0");
-  return `${days[d.getUTCDay()]} ${p2(d.getUTCDate())} ${months[d.getUTCMonth()]}&nbsp;&nbsp;${p2(d.getUTCHours())}:${p2(d.getUTCMinutes())}`;
 }
 
 function extractItemTemplate(tpl: string): { shell: string; item: string } {
@@ -97,7 +81,6 @@ function main() {
     .replaceAll("{{TITLE}}", escapeHtml(title()))
     .replaceAll("{{SUBTITLE}}", escapeHtml(subtitle))
     .replaceAll("{{COUNT}}", String(formulae.length))
-    .replaceAll("{{CLOCK}}", clock())
     .replaceAll("{{TAP}}", TAP)
     .replaceAll("{{ROWS}}", rows);
 

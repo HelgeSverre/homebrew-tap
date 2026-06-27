@@ -132,7 +132,7 @@
 <div class="screen" id="screen">
   <div class="statusbar">
     <span class="pg">P200 <b>HOMEBREW</b></span>
-    <span class="clk">{{CLOCK}}</span>
+    <span class="clk" aria-label="Current time">--- -- ---&nbsp;&nbsp;--:--</span>
   </div>
 
   <div class="stripe"></div>
@@ -164,6 +164,23 @@
 </div>
 
 <script>
+  (function () {
+    var clock = document.querySelector(".clk");
+    if (!clock) return;
+
+    var days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    var p2 = function (n) { return String(n).padStart(2, "0"); };
+
+    function updateClock() {
+      var d = new Date();
+      clock.textContent = days[d.getDay()] + " " + p2(d.getDate()) + " " + months[d.getMonth()] + "\u00a0\u00a0" + p2(d.getHours()) + ":" + p2(d.getMinutes());
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  })();
+
   // Rows are server-rendered; this only wires interactivity (expand + copy).
   document.getElementById("screen").addEventListener("click", function (e) {
     var copyEl = e.target.closest("[data-copy]");
