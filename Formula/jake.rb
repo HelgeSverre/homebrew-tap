@@ -1,27 +1,27 @@
 class Jake < Formula
   desc "Modern command runner with dependency tracking, built with Zig"
   homepage "https://www.jakefile.dev/"
-  version "0.8.1"
+  version "0.9.0"
   license "MIT"
 
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/helgesverre/jake/releases/download/v0.8.1/jake-macos-aarch64"
-      sha256 "a4848ffbdf4382a65c628d1390bbd0c556437cc2ac2be5cfba71c7f5b14761b1"
+      url "https://github.com/helgesverre/jake/releases/download/v0.9.0/jake-macos-aarch64"
+      sha256 "60ae6435318106a0ff0dfe2124bec12fae103247b9b9ce9d9cb0b05f1cc1c410"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/helgesverre/jake/releases/download/v0.8.1/jake-macos-x86_64"
-      sha256 "c978468aaa2d81907db03714cccedf99f5638f9fffbccb74a57f821ee281571f"
+      url "https://github.com/helgesverre/jake/releases/download/v0.9.0/jake-macos-x86_64"
+      sha256 "21171cd56fd6a5a3835086a9eb6acc263d56e8f7df6f391c1d1278ca56b5096f"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/helgesverre/jake/releases/download/v0.8.1/jake-linux-aarch64"
-      sha256 "524ae568f6b7d3fd0d05424dc22f7a1a286bba27f2d4315b638eebb6909b90ef"
+      url "https://github.com/helgesverre/jake/releases/download/v0.9.0/jake-linux-aarch64"
+      sha256 "bd5e6b3fd0a24a6c79d06e78b8486bcb3301bd14fc3fa579525c26fed7282c7b"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/helgesverre/jake/releases/download/v0.8.1/jake-linux-x86_64"
-      sha256 "962012f0f0be99b9d882abb3fce23ed8192cf3663bc2e06d9b14d01d5283300e"
+      url "https://github.com/helgesverre/jake/releases/download/v0.9.0/jake-linux-x86_64"
+      sha256 "65209abea5273af8bd2f2b6f0654fac2b753980d56612d0654f7c62a7cf877e6"
     end
   end
 
