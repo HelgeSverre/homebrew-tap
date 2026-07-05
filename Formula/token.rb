@@ -1,20 +1,20 @@
 class Token < Formula
   desc "A fast, minimal multi-cursor text editor with syntax highlighting"
   homepage "https://token-editor.com"
-  version "0.3.19"
+  version "0.4.0"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/token/releases/download/v0.3.19/token-aarch64-apple-darwin.tar.xz"
-      sha256 "5ef96f6259b249c5f28b2745c6523d45af9bcc776f30b77377cbffdcefe58cae"
+      url "https://github.com/HelgeSverre/token/releases/download/v0.4.0/token-aarch64-apple-darwin.tar.xz"
+      sha256 "0afdeafec04ff23f095ff3c1b0181f6f8d48e15f0c7096981565f2ed52237cff"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/token/releases/download/v0.3.19/token-x86_64-apple-darwin.tar.xz"
-      sha256 "b4b26b3ec538d519c0232c7b22545ec60f9538bb17532368e022d1513b9fa8b4"
+      url "https://github.com/HelgeSverre/token/releases/download/v0.4.0/token-x86_64-apple-darwin.tar.xz"
+      sha256 "92b8972d6401dafe4c0a7c5221c5fe64d77b8af7430756706065e527534f278e"
     end
   end
   if OS.linux? && Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/token/releases/download/v0.3.19/token-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "a373666876422f97c2cd4f17f5f204650719481b4069652f4a451014cfe32406"
+    url "https://github.com/HelgeSverre/token/releases/download/v0.4.0/token-x86_64-unknown-linux-gnu.tar.xz"
+    sha256 "f7e4ce761985b08f5013540bb54fccc379db4b8ab88904028b7663167db772cc"
   end
   license "MIT"
 
