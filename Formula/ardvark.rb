@@ -1,27 +1,27 @@
 class Ardvark < Formula
   desc "Crawler and indexer for ARD (Agentic Resource Discovery) ai-catalog.json documents"
   homepage "https://ardvark.no"
-  version "0.3.0"
+  version "0.4.0"
   license "MIT"
 
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/helgesverre/ardvark/releases/download/v0.3.0/ardvark-darwin-arm64"
-      sha256 "286d42382bf64f30a791bb058db370dda50788b5ef7b6c7aaa563b497ef46fc5"
+      url "https://github.com/helgesverre/ardvark/releases/download/v0.4.0/ardvark-darwin-arm64"
+      sha256 "3b361af4adc6b1cdbe652321aeb3926bd74dc3c0f2db675f9b45c96fdb5808bd"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/helgesverre/ardvark/releases/download/v0.3.0/ardvark-darwin-amd64"
-      sha256 "23ff91ef897867a4933d60389da8f459e08043a9b066999ecb8d17240028b54e"
+      url "https://github.com/helgesverre/ardvark/releases/download/v0.4.0/ardvark-darwin-amd64"
+      sha256 "a0963cb5f0a64a8fbc9766c988ff9d8d5db043bf709664c600356b2102843324"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/helgesverre/ardvark/releases/download/v0.3.0/ardvark-linux-arm64"
-      sha256 "e458fc6ab336657e49a9e9b70203efdb581cb2fd539776299432ae9fd69a2c5e"
+      url "https://github.com/helgesverre/ardvark/releases/download/v0.4.0/ardvark-linux-arm64"
+      sha256 "eb42c5ff92050da4ea07f6174866335e288a6c9edee30a419fcabe66e47a8c35"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/helgesverre/ardvark/releases/download/v0.3.0/ardvark-linux-amd64"
-      sha256 "20941a6c20ca7b39c59730f3241862cb86a06c55ba2e203963f0f87d825fef57"
+      url "https://github.com/helgesverre/ardvark/releases/download/v0.4.0/ardvark-linux-amd64"
+      sha256 "15dcff740fca6f287e5e6a60316d9319c5fc1fa07bbecc227ec992d470cf80c3"
     end
   end
 
