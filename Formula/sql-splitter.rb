@@ -1,25 +1,25 @@
 class SqlSplitter < Formula
   desc "High-performance CLI tool for splitting large SQL dump files into individual table files"
   homepage "https://github.com/helgesverre/sql-splitter"
-  version "1.15.0"
+  version "1.16.0"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/helgesverre/sql-splitter/releases/download/v1.15.0/sql-splitter-aarch64-apple-darwin.tar.xz"
-      sha256 "0aef4d86b6dccfa441ce3c064b19dee360244164d42d9bc7823c522d04af51ba"
+      url "https://github.com/helgesverre/sql-splitter/releases/download/v1.16.0/sql-splitter-aarch64-apple-darwin.tar.xz"
+      sha256 "2416d004189293ea5cbf0b48afae574e06c3193356a1399a1cc437800e95e685"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/helgesverre/sql-splitter/releases/download/v1.15.0/sql-splitter-x86_64-apple-darwin.tar.xz"
-      sha256 "c94eb2acca477bdc4c4df1c9c08f9c2e7d4ddd35c0490a0b455af2febe21c1e3"
+      url "https://github.com/helgesverre/sql-splitter/releases/download/v1.16.0/sql-splitter-x86_64-apple-darwin.tar.xz"
+      sha256 "658d7b7a1113345ba3082a5d356ac97cf1e67328d4404a72eb487d7c76c3323e"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/helgesverre/sql-splitter/releases/download/v1.15.0/sql-splitter-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "79076964905cc29a2f30096e3f19b00629bf78068589bdfb2c1dfb32d57b4c6d"
+      url "https://github.com/helgesverre/sql-splitter/releases/download/v1.16.0/sql-splitter-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "e36e229a00d347fcf70177555acbb1fb89b821dee26a2445a566dd5ef5eb4966"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/helgesverre/sql-splitter/releases/download/v1.15.0/sql-splitter-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "523a80cdd46166efe8b0e62a20aa78b23d01ae95b60834113a7be54ae9c79e92"
+      url "https://github.com/helgesverre/sql-splitter/releases/download/v1.16.0/sql-splitter-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "519f08d7a1be93f3206d6157b5da0436cf4b20b465c8a868a230daa4dcf629bb"
     end
   end
   license "MIT"
