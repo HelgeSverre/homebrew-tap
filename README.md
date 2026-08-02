@@ -14,6 +14,7 @@ brew tap helgesverre/tap
 |---------|-------------|---------|
 | [ardvark](https://ardvark.no) | Crawler and indexer for ARD (Agentic Resource Discovery) ai-catalog.json documents | `brew install helgesverre/tap/ardvark` |
 | [dbdump](https://github.com/helgesverre/dbdump) | Intelligent MySQL database dumping tool | `brew install helgesverre/tap/dbdump` |
+| [dev](https://github.com/HelgeSverre/dev) | Zero-setup command discovery and launcher for software projects | `brew install helgesverre/tap/dev` |
 | [fedit](https://github.com/HelgeSverre/fedit) | A small terminal text editor written in F# | `brew install helgesverre/tap/fedit` |
 | [glue](https://getglue.dev) | Terminal-native coding agent | `brew install helgesverre/tap/glue` |
 | [jake](https://www.jakefile.dev/) | Modern command runner with dependency tracking, built with Zig | `brew install helgesverre/tap/jake` |
