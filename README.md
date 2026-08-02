@@ -19,7 +19,7 @@ brew tap helgesverre/tap
 | [jake](https://www.jakefile.dev/) | Modern command runner with dependency tracking, built with Zig | `brew install helgesverre/tap/jake` |
 | [sema-lang](https://sema-lang.com) | Sema — a Lisp dialect with first-class LLM primitives | `brew install helgesverre/tap/sema-lang` |
 | [sql-splitter](https://github.com/helgesverre/sql-splitter) | High-performance CLI tool for splitting large SQL dump files into individual table files | `brew install helgesverre/tap/sql-splitter` |
-| [strek](https://github.com/HelgeSverre/strek) | A native vector editor for logos and icons | `brew install helgesverre/tap/strek` |
+| [strek](https://github.com/HelgeSverre/strek) | Native vector editor for logos and icons | `brew install helgesverre/tap/strek` |
 | [token](https://token-editor.com) | A fast, minimal multi-cursor text editor with syntax highlighting | `brew install helgesverre/tap/token` |
 
 ## Usage
