@@ -3,22 +3,22 @@ class Strek < Formula
   homepage "https://github.com/HelgeSverre/strek"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.1.0/strek-aarch64-apple-darwin.tar.xz"
-      sha256 "5176c5f438150defe30d1b8445b9604750d39a3ad854c7cbe67ab171dc6bef53"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.0/strek-aarch64-apple-darwin.tar.xz"
+      sha256 "91cd54e26433bb55f5fa588b0e0451d72351ecba5f897e4e485c8adfd214b9d5"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.1.0/strek-x86_64-apple-darwin.tar.xz"
-      sha256 "4aed8bccfe0a258cca274d919377f48126fb440ffe94e17f9b18ac444d67e50f"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.0/strek-x86_64-apple-darwin.tar.xz"
+      sha256 "aafadc5087ee03edbb51771a90a62d8768d72e841c38c537270c8fb9fe61bfe7"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.1.0/strek-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "329517276d407f7a7a51d8928ef124c74c4ffc183641abec5235d7c0342d373a"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.0/strek-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "149f0a3c851a198199b10fec41c2f85007e72915bbb9db8c2309f485806f440f"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.1.0/strek-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "daf0ac6b28160b0ec03448d63639d2ddbae4be860f37f200736df86e37102c24"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.0/strek-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "ced28079f7a0eba6731572c87fd7d111493ff0778a9561d6c67436f1ada1641c"
     end
   end
   license "MIT"
