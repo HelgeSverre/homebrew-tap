@@ -1,7 +1,6 @@
 class Strek < Formula
-  desc "A native vector editor for logos and icons"
+  desc "Native vector editor for logos and icons"
   homepage "https://github.com/HelgeSverre/strek"
-  version "0.1.0"
   if OS.mac?
     if Hardware::CPU.arm?
       url "https://github.com/HelgeSverre/strek/releases/download/v0.1.0/strek-aarch64-apple-darwin.tar.xz"
