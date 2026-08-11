@@ -1,20 +1,20 @@
 class Token < Formula
   desc "A fast, minimal multi-cursor text editor with syntax highlighting"
   homepage "https://token-editor.com"
-  version "0.4.0"
+  version "0.5.0"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/token/releases/download/v0.4.0/token-aarch64-apple-darwin.tar.xz"
-      sha256 "0afdeafec04ff23f095ff3c1b0181f6f8d48e15f0c7096981565f2ed52237cff"
+      url "https://github.com/HelgeSverre/token/releases/download/v0.5.0/token-aarch64-apple-darwin.tar.xz"
+      sha256 "630554aa998b05985b4eecbb4b02ccecdea8418af713abaffc4e4f118fe4eab3"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/token/releases/download/v0.4.0/token-x86_64-apple-darwin.tar.xz"
-      sha256 "92b8972d6401dafe4c0a7c5221c5fe64d77b8af7430756706065e527534f278e"
+      url "https://github.com/HelgeSverre/token/releases/download/v0.5.0/token-x86_64-apple-darwin.tar.xz"
+      sha256 "e7e1ae1c25e87a677f6578c46b7567c5f741db1b8822639a1a42d6a7839b8163"
     end
   end
   if OS.linux? && Hardware::CPU.intel?
-    url "https://github.com/HelgeSverre/token/releases/download/v0.4.0/token-x86_64-unknown-linux-gnu.tar.xz"
-    sha256 "f7e4ce761985b08f5013540bb54fccc379db4b8ab88904028b7663167db772cc"
+    url "https://github.com/HelgeSverre/token/releases/download/v0.5.0/token-x86_64-unknown-linux-gnu.tar.xz"
+    sha256 "f0eee894792f139b550c1cb924367dad8f3e0ab43f63044dfbe3e903f2fe9cc0"
   end
   license "MIT"
 
@@ -41,9 +41,15 @@ class Token < Formula
   end
 
   def install
-    bin.install "profile_render", "screenshot", "token" if OS.mac? && Hardware::CPU.arm?
-    bin.install "profile_render", "screenshot", "token" if OS.mac? && Hardware::CPU.intel?
-    bin.install "profile_render", "screenshot", "token" if OS.linux? && Hardware::CPU.intel?
+    if OS.mac? && Hardware::CPU.arm?
+      bin.install "profile_render", "screenshot", "token"
+    end
+    if OS.mac? && Hardware::CPU.intel?
+      bin.install "profile_render", "screenshot", "token"
+    end
+    if OS.linux? && Hardware::CPU.intel?
+      bin.install "profile_render", "screenshot", "token"
+    end
 
     install_binary_aliases!
 
