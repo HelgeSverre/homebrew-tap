@@ -16,6 +16,7 @@ brew tap helgesverre/tap
 | [dbdump](https://github.com/helgesverre/dbdump) | Intelligent MySQL database dumping tool | `brew install helgesverre/tap/dbdump` |
 | [dev](https://github.com/HelgeSverre/dev) | Zero-setup command discovery and launcher for software projects | `brew install helgesverre/tap/dev` |
 | [fedit](https://github.com/HelgeSverre/fedit) | A small terminal text editor written in F# | `brew install helgesverre/tap/fedit` |
+| [files](https://github.com/HelgeSverre/files) | Fast, git-aware directory tree for your terminal | `brew install helgesverre/tap/files` |
 | [glue](https://getglue.dev) | Terminal-native coding agent | `brew install helgesverre/tap/glue` |
 | [jake](https://www.jakefile.dev/) | Modern command runner with dependency tracking, built with Zig | `brew install helgesverre/tap/jake` |
 | [sema-lang](https://sema-lang.com) | Sema — a Lisp dialect with first-class LLM primitives | `brew install helgesverre/tap/sema-lang` |
