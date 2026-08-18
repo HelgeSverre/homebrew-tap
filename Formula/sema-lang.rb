@@ -1,25 +1,25 @@
 class SemaLang < Formula
   desc "Sema — a Lisp dialect with first-class LLM primitives"
   homepage "https://sema-lang.com"
-  version "1.34.2"
+  version "1.35.0"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/sema-lisp/sema/releases/download/v1.34.2/sema-lang-aarch64-apple-darwin.tar.xz"
-      sha256 "57a1e9dc97a8850f7d767017320aac2866547a8533c79c1c9d9e8ed0dd6ef98f"
+      url "https://github.com/sema-lisp/sema/releases/download/v1.35.0/sema-lang-aarch64-apple-darwin.tar.xz"
+      sha256 "7d14f057f1d4b45aca9e74f5bb402252aaa9423c00541fc920dfa5fe959cd64d"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/sema-lisp/sema/releases/download/v1.34.2/sema-lang-x86_64-apple-darwin.tar.xz"
-      sha256 "4f9df99aa6141b9f246d6bc41d58fc8d803e46e297b3427a34ea15045dc6d8f1"
+      url "https://github.com/sema-lisp/sema/releases/download/v1.35.0/sema-lang-x86_64-apple-darwin.tar.xz"
+      sha256 "37890f86a065e9957363b0ce69a4f7468d8842ff2506f9c3a5f2f3189aab9ca1"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/sema-lisp/sema/releases/download/v1.34.2/sema-lang-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "304c8bd096bca274d780e2a342ad7676c16eba0323d1fb48fb89890d9de8e7c1"
+      url "https://github.com/sema-lisp/sema/releases/download/v1.35.0/sema-lang-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "2f033e820d8812622e947ecbc18537387e3c1223391ae3250456f84520d1e613"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/sema-lisp/sema/releases/download/v1.34.2/sema-lang-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "f9e7f9b4508eefd244e625e955cd49eb88ac5815aba81837cbb49fc7fab196ee"
+      url "https://github.com/sema-lisp/sema/releases/download/v1.35.0/sema-lang-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "14f4be5210037a597bb8012fa6c57ce5f03645b2411ad89ee620915ee337a3c6"
     end
   end
   license "MIT"
@@ -48,10 +48,18 @@ class SemaLang < Formula
   end
 
   def install
-    bin.install "sema" if OS.mac? && Hardware::CPU.arm?
-    bin.install "sema" if OS.mac? && Hardware::CPU.intel?
-    bin.install "sema" if OS.linux? && Hardware::CPU.arm?
-    bin.install "sema" if OS.linux? && Hardware::CPU.intel?
+    if OS.mac? && Hardware::CPU.arm?
+      bin.install "sema"
+    end
+    if OS.mac? && Hardware::CPU.intel?
+      bin.install "sema"
+    end
+    if OS.linux? && Hardware::CPU.arm?
+      bin.install "sema"
+    end
+    if OS.linux? && Hardware::CPU.intel?
+      bin.install "sema"
+    end
 
     install_binary_aliases!
 
