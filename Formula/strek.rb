@@ -1,25 +1,25 @@
 class Strek < Formula
   desc "Native vector editor for logos and icons"
   homepage "https://github.com/HelgeSverre/strek"
-  version "0.2.1"
+  version "0.2.2"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.1/strek-aarch64-apple-darwin.tar.xz"
-      sha256 "b574a8d98f91687f4085570a34dedd84019fe9a3a92ab66122b8eb07b4fac4db"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.2/strek-aarch64-apple-darwin.tar.xz"
+      sha256 "dd88e9848b6512abbec49904fa203b9f2478e57f5853b949475e43e6ba0b2a26"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.1/strek-x86_64-apple-darwin.tar.xz"
-      sha256 "028e5af06cc4cca6f4b5181adde4936855bf31d15253567b5d26a4bad1679f6e"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.2/strek-x86_64-apple-darwin.tar.xz"
+      sha256 "bab1b4e7e66533c3f9da8165a802fcd7b7474132084ad5c376a2c5a648de1bc4"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.1/strek-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "77f051044f5b977c06c2b3aa2ec18504eb6e2dbeb1892e24216a8d49110953a9"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.2/strek-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "9e2598d3fd53019701b225fc596080acaecdd3580f15d72a624ab4e2068dafbf"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.1/strek-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "9104b90618198bd7423c91456ae8cf42a51e380d3aa34fcab8d7a04cd8cb9721"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.2/strek-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "7aab035138cc09f5aa83944ed9a1eae95d6059ba0c0a6415749e5ac7740ca72c"
     end
   end
   license "MIT"
@@ -48,10 +48,18 @@ class Strek < Formula
   end
 
   def install
-    bin.install "strek" if OS.mac? && Hardware::CPU.arm?
-    bin.install "strek" if OS.mac? && Hardware::CPU.intel?
-    bin.install "strek" if OS.linux? && Hardware::CPU.arm?
-    bin.install "strek" if OS.linux? && Hardware::CPU.intel?
+    if OS.mac? && Hardware::CPU.arm?
+      bin.install "strek"
+    end
+    if OS.mac? && Hardware::CPU.intel?
+      bin.install "strek"
+    end
+    if OS.linux? && Hardware::CPU.arm?
+      bin.install "strek"
+    end
+    if OS.linux? && Hardware::CPU.intel?
+      bin.install "strek"
+    end
 
     install_binary_aliases!
 
