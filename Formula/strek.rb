@@ -1,25 +1,25 @@
 class Strek < Formula
   desc "Native vector editor for logos and icons"
   homepage "https://github.com/HelgeSverre/strek"
-  version "0.2.2"
+  version "0.2.3"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.2/strek-aarch64-apple-darwin.tar.xz"
-      sha256 "dd88e9848b6512abbec49904fa203b9f2478e57f5853b949475e43e6ba0b2a26"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.3/strek-aarch64-apple-darwin.tar.xz"
+      sha256 "a46f70067b115797e912e3f4cd653e71e9a9df46da2ea06d631f874b1e9b3d12"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.2/strek-x86_64-apple-darwin.tar.xz"
-      sha256 "bab1b4e7e66533c3f9da8165a802fcd7b7474132084ad5c376a2c5a648de1bc4"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.3/strek-x86_64-apple-darwin.tar.xz"
+      sha256 "9b6eb2dae351f46f73fc954f67ac8183de868fa83c2b020fb83eff49bcd4ae04"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.2/strek-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "9e2598d3fd53019701b225fc596080acaecdd3580f15d72a624ab4e2068dafbf"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.3/strek-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "0846530288b42d61ccac68e270c0f3beadd5a2b3421064586a53f6ce1093ffc8"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.2/strek-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "7aab035138cc09f5aa83944ed9a1eae95d6059ba0c0a6415749e5ac7740ca72c"
+      url "https://github.com/HelgeSverre/strek/releases/download/v0.2.3/strek-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "62b058eaf4eccaa26239ab8928ce23bdec6ee3e51132e2301ad99f1199ba73ba"
     end
   end
   license "MIT"
