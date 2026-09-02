@@ -1,7 +1,7 @@
 cask "fence" do
-  version "0.1.4"
-  sha256 arm:   "6cb0c0071f0954e1e868830787eb1b9341ba529a7354103baf6fb945c0dc299b",
-         intel: "65b62d7be7d3c7e4a064a61d9bf3ab8c2f81c389689c8678cfc8da631b64a4cc"
+  version "0.1.5"
+  sha256 arm:   "f07dde35c8828056e845ed3caf9d3391005c148f2f7bcae4409501765d0de320",
+         intel: "1e018c94e170f446f26330cd1c8c3b9c4d29884a55cc85d57f9b8f25d4f87e2a"
 
   on_arm do
     url "https://github.com/HelgeSverre/fence/releases/download/v#{version}/Fence-#{version}-arm64.dmg"
