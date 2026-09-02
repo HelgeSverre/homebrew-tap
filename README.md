@@ -24,11 +24,20 @@ brew tap helgesverre/tap
 | [strek](https://github.com/HelgeSverre/strek) | Native vector editor for logos and icons | `brew install helgesverre/tap/strek` |
 | [token](https://token-editor.com) | A fast, minimal multi-cursor text editor with syntax highlighting | `brew install helgesverre/tap/token` |
 
+## Available Casks
+
+| Cask | Description | Install |
+|------|-------------|---------|
+| [fence](https://github.com/HelgeSverre/fence) | Desktop Markdown editor with live preview, built with Elm and Electron | `brew install --cask helgesverre/tap/fence` |
+
 ## Usage
 
 ```bash
 # Install a formula
 brew install helgesverre/tap/<formula-name>
+
+# Install an app (cask)
+brew install --cask helgesverre/tap/<cask-name>
 
 # Update to latest version
 brew update && brew upgrade helgesverre/tap/<formula-name>
@@ -36,4 +45,4 @@ brew update && brew upgrade helgesverre/tap/<formula-name>
 
 ## How It Works
 
-Formulae are automatically published by [cargo-dist](https://github.com/axodotdev/cargo-dist) when a new version is tagged in the source repository. No manual updates needed.
+Formulae and casks are published automatically by each project's release workflow (most via [cargo-dist](https://github.com/axodotdev/cargo-dist)) when a new version is tagged in the source repository. No manual updates needed.
