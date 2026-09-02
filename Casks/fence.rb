@@ -1,7 +1,7 @@
 cask "fence" do
-  version "0.1.2"
-  sha256 arm:   "2fda3130f10416fbd10c9033e114054bc5339a1ea17af1c286aa33cdcceb16fd",
-         intel: "37621904f0346b15cc852beb15c3b7d1346f11e8fd87657e1ad86afad53daab3"
+  version "0.1.3"
+  sha256 arm:   "48576b9539a830a5704cbc77c76ebc4cbc35a70e970f7669d283235ad1bc8fae",
+         intel: "af3e63c385b82c16e7c12b3d56258f510f42e9c0af453f61a1a21bb33b2ec3be"
 
   on_arm do
     url "https://github.com/HelgeSverre/fence/releases/download/v#{version}/Fence-#{version}-arm64.dmg"
@@ -19,7 +19,7 @@ cask "fence" do
     strategy :github_latest
   end
 
-  depends_on macos: :big_sur
+  depends_on macos: :ventura
 
   app "Fence.app"
 
