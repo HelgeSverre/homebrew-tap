@@ -3,7 +3,7 @@ name: Update README
 on:
   push:
     branches: [main]
-    paths: ['Formula/*.rb']
+    paths: ['Formula/*.rb', 'Casks/*.rb']
 
 jobs:
   update-readme:
@@ -43,6 +43,26 @@ jobs:
             fi
           done
 
+          if ls Casks/*.rb >/dev/null 2>&1; then
+            cat >> README.md << 'CASKS'
+
+          ## Available Casks
+
+          | Cask | Description | Install |
+          |------|-------------|---------|
+          CASKS
+            for f in Casks/*.rb; do
+              name=$(basename "$f" .rb)
+              desc=$(grep '^ *desc ' "$f" | head -1 | sed 's/^ *desc "\(.*\)"/\1/')
+              homepage=$(grep '^ *homepage ' "$f" | head -1 | sed 's/^ *homepage "\(.*\)"/\1/')
+              if [ -n "$homepage" ]; then
+                echo "| [$name]($homepage) | $desc | \`brew install --cask helgesverre/tap/$name\` |" >> README.md
+              else
+                echo "| $name | $desc | \`brew install --cask helgesverre/tap/$name\` |" >> README.md
+              fi
+            done
+          fi
+
           cat >> README.md << 'FOOTER'
 
           ## Usage
@@ -51,13 +71,16 @@ jobs:
           # Install a formula
           brew install helgesverre/tap/<formula-name>
 
+          # Install an app (cask)
+          brew install --cask helgesverre/tap/<cask-name>
+
           # Update to latest version
           brew update && brew upgrade helgesverre/tap/<formula-name>
           ```
 
           ## How It Works
 
-          Formulae are automatically published by [cargo-dist](https://github.com/axodotdev/cargo-dist) when a new version is tagged in the source repository. No manual updates needed.
+          Formulae and casks are published automatically by each project's release workflow (most via [cargo-dist](https://github.com/axodotdev/cargo-dist)) when a new version is tagged in the source repository. No manual updates needed.
           FOOTER
 
       - name: Commit if changed

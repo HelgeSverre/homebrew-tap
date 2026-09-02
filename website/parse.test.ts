@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { parsePlatforms, parseFormula } from "./parse";
+import { parsePlatforms, parseFormula, parseCask, parseCaskPlatforms } from "./parse";
 
 // Platform detection must come from the Ruby OS/CPU block structure,
 // NOT the release filename — the tap uses four different filename schemes.
@@ -169,4 +169,69 @@ test("osLabel summarises which operating systems have builds", () => {
   expect(osLabel(["mac-arm64", "mac-x86_64"])).toBe("macOS");
   expect(osLabel(["linux-arm64", "linux-x86_64"])).toBe("Linux");
   expect(osLabel([])).toBe("");
+});
+
+// Casks (macOS apps) — as rendered by fence/scripts/render-cask.sh.
+
+const FENCE_CASK = `cask "fence" do
+  version "0.1.1"
+  sha256 arm:   "aaaa",
+         intel: "bbbb"
+
+  on_arm do
+    url "https://github.com/HelgeSverre/fence/releases/download/v#{version}/Fence-#{version}-arm64.dmg"
+  end
+  on_intel do
+    url "https://github.com/HelgeSverre/fence/releases/download/v#{version}/Fence-#{version}.dmg"
+  end
+
+  name "Fence"
+  desc "Desktop Markdown editor with live preview, built with Elm and Electron"
+  homepage "https://github.com/HelgeSverre/fence"
+
+  livecheck do
+    url :url
+    strategy :github_latest
+  end
+
+  depends_on macos: :big_sur
+
+  app "Fence.app"
+
+  zap trash: [
+    "~/Library/Application Support/Fence",
+  ]
+end
+`;
+
+test("cask: on_arm/on_intel blocks map to the two mac cells with per-arch hashes", () => {
+  const c = parseCask(FENCE_CASK, "fence");
+  expect(c.kind).toBe("cask");
+  expect(c.name).toBe("fence");
+  expect(c.version).toBe("0.1.1");
+  expect(c.license).toBe("—");
+  expect(c.desc).toMatch(/Markdown editor/);
+  expect(c.homepage).toBe("https://github.com/HelgeSverre/fence");
+  expect([...c.platforms.keys()].sort()).toEqual(["mac-arm64", "mac-x86_64"]);
+  expect(c.platforms.get("mac-arm64")).toEqual({ url: expect.stringContaining("-arm64.dmg"), sha256: "aaaa" });
+  expect(c.platforms.get("mac-x86_64")?.sha256).toBe("bbbb");
+  expect(c.platforms.has("linux-x86_64")).toBe(false);
+});
+
+test("cask: a bare url with no arch block is universal (both mac cells)", () => {
+  const p = parseCaskPlatforms(`
+  version "2.0"
+  sha256 "cccc"
+  url "https://x/App-universal.dmg"
+  app "App.app"`);
+  expect([...p.keys()].sort()).toEqual(["mac-arm64", "mac-x86_64"]);
+  expect(p.get("mac-x86_64")).toEqual({ url: "https://x/App-universal.dmg", sha256: "cccc" });
+});
+
+test("cask: sha256 :no_check still records the platform", () => {
+  const p = parseCaskPlatforms(`
+  version :latest
+  sha256 :no_check
+  url "https://x/App.dmg"`);
+  expect(p.get("mac-arm64")).toEqual({ url: "https://x/App.dmg", sha256: "" });
 });

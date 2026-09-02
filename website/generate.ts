@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// Regenerate dist/index.html from Formula/*.rb.
+// Regenerate dist/index.html from Formula/*.rb and Casks/*.rb.
 // Usage: bun run website/generate.ts
 //
 // All parsing lives in ./parse.ts (unit-tested). This file is the IO + templating shell.
@@ -7,11 +7,12 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, cpSync, existsSync } from "node:fs";
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseFormula, homepageHost, osLabel, type Formula, type Cell } from "./parse";
+import { parseFormula, parseCask, homepageHost, osLabel, type Formula, type Cell } from "./parse";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = dirname(HERE);
 const FORMULA_DIR = join(ROOT, "Formula");
+const CASK_DIR = join(ROOT, "Casks");
 const TEMPLATE = join(HERE, "template.html");
 const DIST = join(ROOT, "dist");
 const CNAME = join(HERE, "CNAME");
@@ -28,11 +29,19 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-function loadFormulae(): Formula[] {
-  return readdirSync(FORMULA_DIR)
+function loadDir(dir: string, parse: (src: string, id: string) => Formula): Formula[] {
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
     .filter((f) => f.endsWith(".rb"))
     .sort()
-    .map((f) => parseFormula(readFileSync(join(FORMULA_DIR, f), "utf8"), basename(f, ".rb")));
+    .map((f) => parse(readFileSync(join(dir, f), "utf8"), basename(f, ".rb")));
+}
+
+function loadItems(): Formula[] {
+  // One mixed alphabetical index; casks are marked with an APP tag.
+  return [...loadDir(FORMULA_DIR, parseFormula), ...loadDir(CASK_DIR, parseCask)].sort((a, b) =>
+    a.id.localeCompare(b.id),
+  );
 }
 
 function title(): string {
@@ -51,9 +60,13 @@ function renderItem(item: string, f: Formula, page: number): string {
   const has = (c: Cell) => f.platforms.has(c);
   const macAny = has("mac-arm64") || has("mac-x86_64");
   const lnxAny = has("linux-arm64") || has("linux-x86_64");
+  const cask = f.kind === "cask";
   return item
     .replaceAll("{{TAP}}", TAP)
     .replaceAll("{{ID}}", f.id)
+    .replaceAll("{{INSTALL}}", `brew install ${cask ? "--cask " : ""}${TAP}/${f.id}`)
+    .replaceAll("{{SRC_DIR}}", cask ? "Casks" : "Formula")
+    .replaceAll("{{KIND_TAG}}", cask ? `<span class="kind">APP</span>` : "")
     .replaceAll("{{PAGE}}", String(page))
     .replaceAll("{{NAME}}", escapeHtml(f.name))
     .replaceAll("{{DESC}}", escapeHtml(f.desc))
@@ -70,12 +83,15 @@ function renderItem(item: string, f: Formula, page: number): string {
 }
 
 function main() {
-  const formulae = loadFormulae();
+  const formulae = loadItems();
   const { shell, item } = extractItemTemplate(readFileSync(TEMPLATE, "utf8"));
 
   const rows = formulae.map((f, i) => renderItem(item, f, FIRST_PAGE + i)).join("\n");
   const allCells = formulae.flatMap((f) => [...f.platforms.keys()]);
-  const subtitle = `${formulae.length} command-line tools · ${osLabel(allCells)}`;
+  const tools = formulae.filter((f) => f.kind === "formula").length;
+  const apps = formulae.length - tools;
+  const counts = `${tools} command-line tools` + (apps ? ` + ${apps} ${apps === 1 ? "app" : "apps"}` : "");
+  const subtitle = `${counts} · ${osLabel(allCells)}`;
 
   const html = shell
     .replaceAll("{{TITLE}}", escapeHtml(title()))
@@ -90,7 +106,7 @@ function main() {
   // Tell GitHub Pages not to run Jekyll (otherwise underscore-prefixed paths break).
   writeFileSync(join(DIST, ".nojekyll"), "");
 
-  console.log(`wrote ${formulae.length} formulae to ${join(DIST, "index.html")}`);
+  console.log(`wrote ${formulae.length} items to ${join(DIST, "index.html")}`);
 }
 
 main();

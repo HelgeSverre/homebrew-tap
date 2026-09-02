@@ -93,6 +93,7 @@
   .cmd-copy .cmd{color:var(--w);font-size:16px;}
   .cmd-copy .cmd::before{content:"> ";color:var(--g);}
   .cmd-copy .tag{margin-left:auto;color:var(--g);font-size:12px;letter-spacing:.08em;white-space:nowrap;}
+  .kind{margin-left:8px;padding:0 5px;border:1px solid var(--g);color:var(--g);font-size:11px;letter-spacing:.12em;vertical-align:middle;}
   .cmd-copy.flash{border-color:var(--y);}
   .cmd-copy.flash .cmd{color:var(--y);} .cmd-copy.flash .tag{color:var(--y);}
 
@@ -204,15 +205,15 @@
 <div class="item" data-id="{{ID}}">
   <div class="irow">
     <span class="num">{{PAGE}}</span>
-    <span class="nmwrap"><span class="nm"><span class="ar">▸</span> {{NAME}}</span><span class="ds" title="{{DESC}}">{{DESC}}</span></span>
+    <span class="nmwrap"><span class="nm"><span class="ar">▸</span> {{NAME}}{{KIND_TAG}}</span><span class="ds" title="{{DESC}}">{{DESC}}</span></span>
     <span class="ver">{{VERSION}}</span>
     <span class="pf">{{MAC}}</span>
     <span class="pf">{{LNX}}</span>
   </div>
   <div class="drawer"><div class="dwrap"><div class="dbody">
     <div class="dfull">{{DESC}}</div>
-    <div class="cmd-copy" data-copy="brew install {{TAP}}/{{ID}}">
-      <span class="cmd">brew install {{TAP}}/{{ID}}</span>
+    <div class="cmd-copy" data-copy="{{INSTALL}}">
+      <span class="cmd">{{INSTALL}}</span>
       <span class="tag">CLICK TO COPY</span>
     </div>
     <div class="dcols">
@@ -228,7 +229,7 @@
         <div class="dlab">INFO</div>
         <div class="links">
           <a href="{{HOMEPAGE}}">↗ {{HOMEPAGE_HOST}}</a>
-          <a href="https://github.com/HelgeSverre/homebrew-tap/blob/main/Formula/{{ID}}.rb">↗ Formula source</a>
+          <a href="https://github.com/HelgeSverre/homebrew-tap/blob/main/{{SRC_DIR}}/{{ID}}.rb">↗ Source</a>
           <span class="lic">License {{LICENSE}}</span>
         </div>
       </div>

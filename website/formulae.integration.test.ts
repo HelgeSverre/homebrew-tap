@@ -1,7 +1,7 @@
 import { test, expect } from "bun:test";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { parseFormula, type Cell } from "./parse";
+import { parseFormula, parseCask, type Cell } from "./parse";
 
 // Characterization guard over the *real* Formula/*.rb set. Everything is derived
 // from disk, so adding a formula needs no edits here: each formula must parse
@@ -35,6 +35,36 @@ for (const id of ids) {
     expect(platforms.length).toBeGreaterThan(0);
     for (const p of platforms) {
       expect(KNOWN_PLATFORMS).toContain(p);
+    }
+  });
+}
+
+// Same guard over Casks/*.rb (macOS apps). The directory may not exist yet;
+// the first cask is pushed by the app's own release workflow.
+
+const CASK_DIR = join(import.meta.dir, "..", "Casks");
+const caskIds = existsSync(CASK_DIR)
+  ? readdirSync(CASK_DIR)
+      .filter((f) => f.endsWith(".rb"))
+      .map((f) => f.replace(/\.rb$/, ""))
+      .sort()
+  : [];
+
+for (const id of caskIds) {
+  test(`cask ${id}: renders every field the site needs, mac-only platforms`, () => {
+    const c = parseCask(readFileSync(join(CASK_DIR, `${id}.rb`), "utf8"), id);
+
+    expect(c.kind).toBe("cask");
+    expect(c.name).toBe(id);
+    expect(c.desc.length).toBeGreaterThan(0);
+    expect(c.homepage).toMatch(/^https?:\/\//);
+    // Cask versions may carry a build suffix, e.g. "1.2.3,456".
+    expect(c.version).toMatch(/^\d+(\.\d+)*(,[\w.-]+)?$/);
+
+    const platforms = [...c.platforms.keys()];
+    expect(platforms.length).toBeGreaterThan(0);
+    for (const p of platforms) {
+      expect(p).toMatch(/^mac-/);
     }
   });
 }

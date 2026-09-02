@@ -13,7 +13,10 @@ export interface Artifact {
   sha256: string;
 }
 
+export type Kind = "formula" | "cask";
+
 export interface Formula {
+  kind: Kind;
   id: string; // basename without .rb — also the `brew install helgesverre/tap/<id>` target
   name: string; // display/install name (== id)
   desc: string;
@@ -96,6 +99,7 @@ export function osLabel(cells: Cell[]): string {
 
 export function parseFormula(src: string, id: string): Formula {
   return {
+    kind: "formula",
     id,
     name: id,
     desc: readField(src, "desc"),
@@ -103,5 +107,48 @@ export function parseFormula(src: string, id: string): Formula {
     version: readField(src, "version"),
     license: readFieldOpt(src, "license") ?? "—",
     platforms: parsePlatforms(src),
+  };
+}
+
+/**
+ * Cask platforms. A cask is macOS by definition, so only the arch context
+ * matters: `on_arm` / `on_intel` blocks each carry a `url`; a bare `url` with
+ * no arch block is a universal build and counts for both. Hashes live in a
+ * single `sha256 arm: "…", intel: "…"` stanza (possibly wrapped over two
+ * lines), a plain `sha256 "…"`, or `sha256 :no_check` — the site never renders
+ * them, so a missing hash must not drop the platform.
+ */
+export function parseCaskPlatforms(src: string): Map<Cell, Artifact> {
+  const sha = (label: string) => src.match(new RegExp(`\\b${label}:\\s*"([^"]*)"`))?.[1];
+  const plain = src.match(/^\s*sha256\s+"([^"]*)"/m)?.[1];
+  const shaFor: Record<"arm64" | "x86_64", string> = {
+    arm64: sha("arm") ?? plain ?? "",
+    x86_64: sha("intel") ?? plain ?? "",
+  };
+
+  const out = new Map<Cell, Artifact>();
+  let arch: Arch;
+  for (const line of src.split("\n")) {
+    if (line.includes("on_arm")) arch = "arm64";
+    else if (line.includes("on_intel")) arch = "x86_64";
+
+    const u = line.match(/\burl\s+"([^"]+)"/);
+    if (!u) continue;
+    const arches: ("arm64" | "x86_64")[] = arch ? [arch] : ["arm64", "x86_64"];
+    for (const a of arches) out.set(`mac-${a}` as Cell, { url: u[1], sha256: shaFor[a] });
+  }
+  return out;
+}
+
+export function parseCask(src: string, id: string): Formula {
+  return {
+    kind: "cask",
+    id,
+    name: id,
+    desc: readField(src, "desc"),
+    homepage: readField(src, "homepage"),
+    version: readField(src, "version"),
+    license: "—",
+    platforms: parseCaskPlatforms(src),
   };
 }
