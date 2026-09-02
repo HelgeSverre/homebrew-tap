@@ -1,25 +1,25 @@
 class Dev < Formula
   desc "Zero-setup command discovery and launcher for software projects"
   homepage "https://github.com/HelgeSverre/dev"
-  version "0.1.0"
+  version "0.1.1"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/dev/releases/download/v0.1.0/dev-launcher-aarch64-apple-darwin.tar.xz"
-      sha256 "0cd57778d6ade6b3fad7450e94b4c6001ca73d014201994861d0a38acffc6a3f"
+      url "https://github.com/HelgeSverre/dev/releases/download/v0.1.1/dev-launcher-aarch64-apple-darwin.tar.xz"
+      sha256 "c65301ce0c7e2614ac888f37034ce6dfa236675f69a27334229b36031887074e"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/dev/releases/download/v0.1.0/dev-launcher-x86_64-apple-darwin.tar.xz"
-      sha256 "7baed607c5cd84c439fab1c8a45848d41e155538d0f5ee74653abf2bd9ab5890"
+      url "https://github.com/HelgeSverre/dev/releases/download/v0.1.1/dev-launcher-x86_64-apple-darwin.tar.xz"
+      sha256 "abf8408662d823075c52c9f1aac02dbf024e1c85920a37b7c74f00bb3d9e3ae5"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/dev/releases/download/v0.1.0/dev-launcher-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "a3ba2c546e444b6c803e1327d7c9d1befe43c35b74902333c838c61c0c482289"
+      url "https://github.com/HelgeSverre/dev/releases/download/v0.1.1/dev-launcher-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "bc90563db4cfa70dba4fd1793eab0e466f84f896173fa0ef16ce8cf0dc2d038b"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/dev/releases/download/v0.1.0/dev-launcher-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "fe2fac1b4e1a92271a64937539b2019f4f63b6b7156e77610eae3c6f055fff45"
+      url "https://github.com/HelgeSverre/dev/releases/download/v0.1.1/dev-launcher-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "ae5e43ecb670e1c6274dcf97ca4de27d2ae008a2f817de597678df979d0f6c87"
     end
   end
   license "MIT"
@@ -48,10 +48,18 @@ class Dev < Formula
   end
 
   def install
-    bin.install "dev" if OS.mac? && Hardware::CPU.arm?
-    bin.install "dev" if OS.mac? && Hardware::CPU.intel?
-    bin.install "dev" if OS.linux? && Hardware::CPU.arm?
-    bin.install "dev" if OS.linux? && Hardware::CPU.intel?
+    if OS.mac? && Hardware::CPU.arm?
+      bin.install "dev"
+    end
+    if OS.mac? && Hardware::CPU.intel?
+      bin.install "dev"
+    end
+    if OS.linux? && Hardware::CPU.arm?
+      bin.install "dev"
+    end
+    if OS.linux? && Hardware::CPU.intel?
+      bin.install "dev"
+    end
 
     install_binary_aliases!
 
