@@ -30,6 +30,7 @@ brew tap helgesverre/tap
 | Cask | Description | Install |
 |------|-------------|---------|
 | [fence](https://github.com/HelgeSverre/fence) | Desktop Markdown editor with live preview, built with Elm and Electron | `brew install --cask helgesverre/tap/fence` |
+| [sourcefour](https://github.com/HelgeSverre/sourcefour) | Fast, native Git history browser you launch from your terminal | `brew install --cask helgesverre/tap/sourcefour` |
 
 ## Usage
 
