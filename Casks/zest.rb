@@ -1,6 +1,6 @@
 cask "zest" do
-  version "0.1.0"
-  sha256 "7d5edc3901ef7bb809752971a5dd79f12976ea076949f6d810e01dc254c65163"
+  version "0.1.1"
+  sha256 "ac486ce8e98fa4bd70ebcc60042062fbed54c0c5d50f0485cfa4f1f1fd52c192"
 
   url "https://github.com/HelgeSverre/zest/releases/download/v#{version}/zest-universal-apple-darwin.pkg"
   name "Zest"
