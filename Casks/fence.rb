@@ -1,7 +1,7 @@
 cask "fence" do
-  version "0.5.0"
-  sha256 arm:   "3b8d49b8b804bd28c7224bd9b501095042a09c21eacb1be9ce47bf91d8040a53",
-         intel: "923634f88e2ab97cf6a33c4072cd55eca18296a38dbb5e1442d9700c4165be97"
+  version "0.6.0"
+  sha256 arm:   "e00b8c35461fd00c0846bd6d695ff61ff27519a42be5069498abae9641c0c130",
+         intel: "34d692843a372b26f5c630496ade9c9cdf00730f41ee0b59cfe7788472698b28"
 
   on_arm do
     url "https://github.com/HelgeSverre/fence/releases/download/v#{version}/Fence-#{version}-arm64.dmg"
@@ -22,7 +22,13 @@ cask "fence" do
   depends_on macos: :ventura
 
   app "Fence.app"
-  command_wrapper "fence", executable: "#{appdir}/Fence.app/Contents/MacOS/Fence"
+  # Detach so `fence PATH` returns the terminal; help/version stay in the foreground to print.
+  command_wrapper "fence", content: <<~SH
+    #!/bin/sh
+    exe="#{appdir}/Fence.app/Contents/MacOS/Fence"
+    for a in "$@"; do case "$a" in -h|--help|-v|--version) exec "$exe" "$@";; esac; done
+    nohup "$exe" "$@" >/dev/null 2>&1 &
+  SH
 
   zap trash: [
     "~/Library/Application Support/Fence",
