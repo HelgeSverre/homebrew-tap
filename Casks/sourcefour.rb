@@ -1,6 +1,6 @@
 cask "sourcefour" do
-  version "0.1.2"
-  sha256 "1495f8cb661d487d3d520d31867f3aadff5b2714604e8fe58bc314adf6908727"
+  version "0.1.3"
+  sha256 "ec9482e7047db170fedcf919ed6f16826ca62f3e7ee0cce1690cde46673b85af"
 
   url "https://github.com/HelgeSverre/sourcefour/releases/download/v#{version}/sourcefour-universal-apple-darwin.pkg"
   name "Sourcefour"
