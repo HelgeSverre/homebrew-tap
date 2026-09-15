@@ -1,25 +1,25 @@
 class Files < Formula
   desc "Fast, git-aware directory tree for your terminal"
   homepage "https://github.com/HelgeSverre/files"
-  version "0.2.5"
+  version "0.2.6"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/files/releases/download/v0.2.5/files-macos-arm64.tar.gz"
-      sha256 "d419587e330f1dcf37d683b8de0a5f227f12b057164b4af419f644f2346b5fd3"
+      url "https://github.com/HelgeSverre/files/releases/download/v0.2.6/files-macos-arm64.tar.gz"
+      sha256 "095627f1ba245b431a9f105560632e90db33c4019a2099c7cc1eaddc6af0e772"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/files/releases/download/v0.2.5/files-macos-x86_64.tar.gz"
-      sha256 "1040905f2895fa16f2244d198491276a08b39d7b58cb5e80a32af22a0363b977"
+      url "https://github.com/HelgeSverre/files/releases/download/v0.2.6/files-macos-x86_64.tar.gz"
+      sha256 "608c0ee80661bec32dedf00bd4ed8ed4ec73a1bc9b997b48ff5218e4a65ed07f"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/files/releases/download/v0.2.5/files-linux-arm64.tar.gz"
-      sha256 "367ebe64c8ef213d765543962f6833a110f6f365c727fce92e45ff2f6cd1f09b"
+      url "https://github.com/HelgeSverre/files/releases/download/v0.2.6/files-linux-arm64.tar.gz"
+      sha256 "0e6dd524e2350fb8d9c2f434aa5805ba5e224b413f1d4b9b2f51e9f427d655e6"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/files/releases/download/v0.2.5/files-linux-x86_64.tar.gz"
-      sha256 "0ed64e29a3d1c23fc917f8f94ca8be5fcb422dc59efcd587ca3d90738952fbd6"
+      url "https://github.com/HelgeSverre/files/releases/download/v0.2.6/files-linux-x86_64.tar.gz"
+      sha256 "81f2a2bc2c00e58f0e7b7f7613388a2d80c9588ad7d09ce819453fd20e432ae7"
     end
   end
   license "MIT"
