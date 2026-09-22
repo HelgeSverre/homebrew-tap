@@ -1,20 +1,20 @@
 class Sourcefour < Formula
   desc "A fast, native Git history browser you launch from your terminal"
   homepage "https://github.com/HelgeSverre/sourcefour"
-  version "0.1.3"
+  version "0.1.4"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/sourcefour/releases/download/v0.1.3/sourcefour-aarch64-apple-darwin.tar.xz"
-      sha256 "c57fc57efa78efb9100f722c83daa5a135476f714a64f464bc8b9177dd5d6cae"
+      url "https://github.com/HelgeSverre/sourcefour/releases/download/v0.1.4/sourcefour-aarch64-apple-darwin.tar.xz"
+      sha256 "67b34d0846d0c1cc0a240122507dde2fe5ec254b80ff75ad510a4b6b0b6cff43"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/sourcefour/releases/download/v0.1.3/sourcefour-x86_64-apple-darwin.tar.xz"
-      sha256 "c1a54aea547fca7d34eaf16ee909e834333783868c68d13c64d57a47aeff4fa6"
+      url "https://github.com/HelgeSverre/sourcefour/releases/download/v0.1.4/sourcefour-x86_64-apple-darwin.tar.xz"
+      sha256 "bf91f9830d395817c6de961001fed435733ae235e5aa993abc690c055517f69b"
     end
   end
   if OS.linux? && Hardware::CPU.intel?
-    url "https://github.com/HelgeSverre/sourcefour/releases/download/v0.1.3/sourcefour-x86_64-unknown-linux-gnu.tar.xz"
-    sha256 "d863e258f13e155f47f8ef78b432594c65531e8a03cd062c304120906fa71066"
+    url "https://github.com/HelgeSverre/sourcefour/releases/download/v0.1.4/sourcefour-x86_64-unknown-linux-gnu.tar.xz"
+    sha256 "ca838daac8673d2bd9574998af4a5109f93d7f97289191679b2ac2b39bb0a6f2"
   end
   license "MIT"
 
