@@ -1,8 +1,8 @@
 cask "sourcefour" do
-  version "0.1.5"
-  sha256 "95fe9d2a0bcdfdf92f928b94db90b77bb73343221e0f328b0cd6262ed008964e"
+  version "0.1.7"
+  sha256 "b0d5d06b6c6122a519202f849e753724db246a36a5b708d3d6e95dad5ab7c858"
 
-  url "https://github.com/HelgeSverre/sourcefour/releases/download/v#{version}/sourcefour-universal-apple-darwin.pkg"
+  url "https://github.com/HelgeSverre/sourcefour/releases/download/v#{version}/sourcefour-universal-apple-darwin.zip"
   name "Sourcefour"
   desc "Fast, native Git history browser you launch from your terminal"
   homepage "https://github.com/HelgeSverre/sourcefour"
@@ -14,9 +14,8 @@ cask "sourcefour" do
 
   depends_on macos: :ventura
 
-  pkg "sourcefour-universal-apple-darwin.pkg"
-  binary "/Applications/Sourcefour.app/Contents/MacOS/sourcefour"
+  app "Sourcefour.app"
+  binary "#{appdir}/Sourcefour.app/Contents/MacOS/sourcefour"
 
-  uninstall quit:    "no.lisethsolutions.sourcefour",
-            pkgutil: "no.lisethsolutions.sourcefour"
+  uninstall quit: "no.lisethsolutions.sourcefour"
 end
