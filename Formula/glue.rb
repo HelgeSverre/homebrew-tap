@@ -1,13 +1,13 @@
 class Glue < Formula
   desc "Terminal-native coding agent"
   homepage "https://getglue.dev"
-  version "0.9.0"
+  version "0.9.1"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/HelgeSverre/glue/releases/download/v0.9.0/glue-macos-arm64.tar.gz"
-      sha256 "53175e0a93e6e93e59aa34ce3aca4e0a6d7227d0e6657f257b60d0937f235441"
+      url "https://github.com/HelgeSverre/glue/releases/download/v0.9.1/glue-macos-arm64.tar.gz"
+      sha256 "4d80157465af5c5126e51b14419036a5f6c9bf3c6d8faeebcbc2439ab2895535"
     end
     on_intel do
       odie "glue does not ship Intel Mac binaries. Apple Silicon (arm64) only."
@@ -16,12 +16,12 @@ class Glue < Formula
 
   on_linux do
     on_intel do
-      url "https://github.com/HelgeSverre/glue/releases/download/v0.9.0/glue-linux-x64.tar.gz"
-      sha256 "8f34eb953ad2897126887fa88804160f34670c9b0f92ccbb8aeae39ba093c33f"
+      url "https://github.com/HelgeSverre/glue/releases/download/v0.9.1/glue-linux-x64.tar.gz"
+      sha256 "a337092ef4025da5ee55ac240ef99161e84a7041f76f704c761eb75a98debebb"
     end
     on_arm do
-      url "https://github.com/HelgeSverre/glue/releases/download/v0.9.0/glue-linux-arm64.tar.gz"
-      sha256 "24ded2fde2cf069859544db789a7580d4838fcb8fb2b396b1086928eaf076c35"
+      url "https://github.com/HelgeSverre/glue/releases/download/v0.9.1/glue-linux-arm64.tar.gz"
+      sha256 "b03077636f9222f4ff73e3d4dcf192b62b3e2a5cd4d5afe7aad28e91bd675580"
     end
   end
 
