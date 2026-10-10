@@ -50,3 +50,5 @@ brew update && brew upgrade helgesverre/tap/<formula-name>
 ## How It Works
 
 Formulae and casks are published automatically by each project's release workflow (most via [cargo-dist](https://github.com/axodotdev/cargo-dist)) when a new version is tagged in the source repository. No manual updates needed.
+
+ClickMore's notarized macOS releases and cask updates are published from its signed release artifacts with [`script/publish_release.sh`](https://github.com/HelgeSverre/clickmore/blob/main/script/publish_release.sh).
