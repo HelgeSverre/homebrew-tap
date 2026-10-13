@@ -1,27 +1,27 @@
 class Dbdump < Formula
   desc "Intelligent MySQL database dumping tool"
   homepage "https://github.com/helgesverre/dbdump"
-  version "1.4.2"
+  version "1.5.0"
   license "MIT"
 
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/helgesverre/dbdump/releases/download/v1.4.2/dbdump-v1.4.2-darwin-arm64.tar.gz"
-      sha256 "f111166dedffb8583ddd839146166daf1559ef29d14b998eea0313a2adb1ad94"
+      url "https://github.com/helgesverre/dbdump/releases/download/v1.5.0/dbdump-v1.5.0-darwin-arm64.tar.gz"
+      sha256 "74f20fd7e25ddaf67d3445b6c01b8939966ed73676271d3b0421659c2b840fdd"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/helgesverre/dbdump/releases/download/v1.4.2/dbdump-v1.4.2-darwin-amd64.tar.gz"
-      sha256 "4b9aa7eea8cdcec10c55ff4e15bfe67a104e895e077183f53433866d757d1bc8"
+      url "https://github.com/helgesverre/dbdump/releases/download/v1.5.0/dbdump-v1.5.0-darwin-amd64.tar.gz"
+      sha256 "be092a702d21f2537e24a47ebc1a04366f7fb32b6b7ef3ee7757c4fc83391fee"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/helgesverre/dbdump/releases/download/v1.4.2/dbdump-v1.4.2-linux-arm64.tar.gz"
-      sha256 "5401889c1b64982b2e8c4e62456303dbf91e5ae6a01ad0ee350de429abca52d7"
+      url "https://github.com/helgesverre/dbdump/releases/download/v1.5.0/dbdump-v1.5.0-linux-arm64.tar.gz"
+      sha256 "6956859fcce0929d22766f1320c4bb6da0edd8e103085e89eb5835147afe4cac"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/helgesverre/dbdump/releases/download/v1.4.2/dbdump-v1.4.2-linux-amd64.tar.gz"
-      sha256 "f094342e1ee3f108d18f60414fee65dfa87aaa0ea1ed6dc8e84e7a96561b3f62"
+      url "https://github.com/helgesverre/dbdump/releases/download/v1.5.0/dbdump-v1.5.0-linux-amd64.tar.gz"
+      sha256 "6af182d5926be8d46a286bc498f8e04b12d54ac904869c31013a339804fccded"
     end
   end
 
