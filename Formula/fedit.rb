@@ -1,25 +1,25 @@
 class Fedit < Formula
   desc "A small terminal text editor written in F#"
   homepage "https://github.com/HelgeSverre/fedit"
-  version "1.10.1"
+  version "1.10.2"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/fedit/releases/download/v1.10.1/fedit-aarch64-apple-darwin.tar.xz"
-      sha256 "4000ebbfe90b7fc8cb6d229e681eb3cc65c6b203402322a421429f01c9923135"
+      url "https://github.com/HelgeSverre/fedit/releases/download/v1.10.2/fedit-aarch64-apple-darwin.tar.xz"
+      sha256 "4959db61a33ab13bc692ab8d6807bb75581e03c3058e622a6ccb11569cec4446"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/fedit/releases/download/v1.10.1/fedit-x86_64-apple-darwin.tar.xz"
-      sha256 "d83ff62dce6b0ab63fdbf12c5c4dde4eeac8f08ae1808f165c6c0f5122ede484"
+      url "https://github.com/HelgeSverre/fedit/releases/download/v1.10.2/fedit-x86_64-apple-darwin.tar.xz"
+      sha256 "1e2903ae7948bc73a64b0ab1c774add1e54c21eae3c2abf155ef6d4dee8dc341"
     end
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/HelgeSverre/fedit/releases/download/v1.10.1/fedit-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "e8cd072f18dde07552f0b3332c46dca377d6f5ae2a501229f2fe511e88f01e24"
+      url "https://github.com/HelgeSverre/fedit/releases/download/v1.10.2/fedit-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "114b39add773b09866bf63b8620eb7b4e137d95b1ad41a7cccd1d70c1250f57c"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/HelgeSverre/fedit/releases/download/v1.10.1/fedit-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "d4abebcebedcc3118420449a39b1020511e1a01bd1124db2c56efdd590c4b832"
+      url "https://github.com/HelgeSverre/fedit/releases/download/v1.10.2/fedit-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "6c032bd49eed424ae2f352bd781b8c2ea1bad07369fabe1d86e593ff1e1f26cd"
     end
   end
   license "MIT"
