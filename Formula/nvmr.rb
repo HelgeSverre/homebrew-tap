@@ -5,23 +5,23 @@ class Nvmr < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/HelgeSverre/nvmr/releases/download/v0.1.0/nvmr-darwin-aarch64.tar.gz"
-      sha256 "77598f991b0d988dba4213e9582efe94d62a8e12d1ef7afa278672f3fa58ab5b"
+      url "https://github.com/HelgeSverre/nvmr/releases/download/v0.1.1/nvmr-darwin-aarch64.tar.gz"
+      sha256 "5920233fc84cacede7f0dc23735790c67cc85138a2351f0c387e8d43b4cdab93"
     end
     on_intel do
-      url "https://github.com/HelgeSverre/nvmr/releases/download/v0.1.0/nvmr-darwin-x86_64.tar.gz"
-      sha256 "ea25e21d92bb1bd90da7dacda6e6b00d4cc5a529613544173e6c8a5dd9326c0b"
+      url "https://github.com/HelgeSverre/nvmr/releases/download/v0.1.1/nvmr-darwin-x86_64.tar.gz"
+      sha256 "fb62c1ed08ee47b1978847564ecd67c51367c57f3522846563bde4c9ebfee0c7"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/HelgeSverre/nvmr/releases/download/v0.1.0/nvmr-linux-aarch64.tar.gz"
-      sha256 "411f8eb02825c5a67eeff74e5156da18b3f5b6040caa8d1fc090d719f0975c3e"
+      url "https://github.com/HelgeSverre/nvmr/releases/download/v0.1.1/nvmr-linux-aarch64.tar.gz"
+      sha256 "f612a409c39ed4c07d6ea50e94f91cce25e78d4e79344e10b3f9fe35cc517174"
     end
     on_intel do
-      url "https://github.com/HelgeSverre/nvmr/releases/download/v0.1.0/nvmr-linux-x86_64.tar.gz"
-      sha256 "564a9a2a44a1be0f8329c6f2361fe731b36c1a8cff89ff1e0500c4abbdefc69c"
+      url "https://github.com/HelgeSverre/nvmr/releases/download/v0.1.1/nvmr-linux-x86_64.tar.gz"
+      sha256 "724c74146ccbeb90a484c2cf255e6ddf1da3c74fac6d0d6cc80fc09a1cb7f945"
     end
   end
 
