@@ -50,4 +50,4 @@ brew update && brew upgrade helgesverre/tap/<formula-name>
 
 ## How It Works
 
-Formulae and casks track releases from their source projects. Most are updated automatically by release workflows (many via [cargo-dist](https://github.com/axodotdev/cargo-dist)); nvmr is currently updated manually.
+Formulae and casks are published automatically by each project's release workflow (most via [cargo-dist](https://github.com/axodotdev/cargo-dist)) when a new version is tagged in the source repository. No manual updates needed.
