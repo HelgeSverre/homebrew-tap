@@ -19,6 +19,7 @@ brew tap helgesverre/tap
 | [files](https://github.com/HelgeSverre/files) | Fast, git-aware directory tree for your terminal | `brew install helgesverre/tap/files` |
 | [glue](https://getglue.dev) | Terminal-native coding agent | `brew install helgesverre/tap/glue` |
 | [jake](https://www.jakefile.dev/) | Modern command runner with dependency tracking, built with Zig | `brew install helgesverre/tap/jake` |
+| [nvmr](https://github.com/HelgeSverre/nvmr) | Native drop-in replacement for nvm | `brew install helgesverre/tap/nvmr` |
 | [sema-lang](https://sema-lang.com) | Sema — a Lisp dialect with first-class LLM primitives | `brew install helgesverre/tap/sema-lang` |
 | [sourcefour](https://github.com/HelgeSverre/sourcefour) | A fast, native Git history browser you launch from your terminal | `brew install helgesverre/tap/sourcefour` |
 | [sql-splitter](https://github.com/helgesverre/sql-splitter) | High-performance CLI tool for splitting large SQL dump files into individual table files | `brew install helgesverre/tap/sql-splitter` |
@@ -49,4 +50,4 @@ brew update && brew upgrade helgesverre/tap/<formula-name>
 
 ## How It Works
 
-Formulae and casks are published automatically by each project's release workflow (most via [cargo-dist](https://github.com/axodotdev/cargo-dist)) when a new version is tagged in the source repository. No manual updates needed.
+Formulae and casks track releases from their source projects. Most are updated automatically by release workflows (many via [cargo-dist](https://github.com/axodotdev/cargo-dist)); nvmr is currently updated manually.
