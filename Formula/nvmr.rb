@@ -1,7 +1,6 @@
 class Nvmr < Formula
   desc "Native drop-in replacement for nvm"
   homepage "https://github.com/HelgeSverre/nvmr"
-  version "0.1.0"
   license "MIT"
 
   on_macos do
