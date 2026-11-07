@@ -235,3 +235,51 @@ test("cask: sha256 :no_check still records the platform", () => {
   url "https://x/App.dmg"`);
   expect(p.get("mac-arm64")).toEqual({ url: "https://x/App.dmg", sha256: "" });
 });
+
+// Homebrew can infer versions from release URLs; an explicit version is optional.
+function releaseFormula(tags: string[]): string {
+  const blocks = tags.map((tag, index) => `
+  ${index === 0 ? "on_macos" : "on_linux"} do
+    on_arm do
+      url "https://github.com/HelgeSverre/nvmr/releases/download/${tag}/nvmr-${index}.tar.gz"
+      sha256 "hash${index}"
+    end
+  end`).join("\n");
+  return `class Nvmr < Formula
+  desc "Native replacement for nvm"
+  homepage "https://github.com/HelgeSverre/nvmr"
+  license "MIT"
+  ${blocks}
+end`;
+}
+
+test("formula version is inferred from matching GitHub release tags", () => {
+  const f = parseFormula(releaseFormula(["v0.1.1", "v0.1.1"]), "nvmr");
+  expect(f.version).toBe("0.1.1");
+  expect(f.platforms.size).toBe(2);
+});
+
+test("formula release versions support unprefixed tags and prereleases", () => {
+  expect(parseFormula(releaseFormula(["1.2.3"]), "nvmr").version).toBe("1.2.3");
+  expect(parseFormula(releaseFormula(["v1.2.3-rc.1"]), "nvmr").version).toBe("1.2.3-rc.1");
+  expect(parseFormula(releaseFormula(["v1.2.3+build.4"]), "nvmr").version).toBe("1.2.3+build.4");
+});
+
+test("explicit formula version takes precedence over the release tag", () => {
+  const src = releaseFormula(["v2.0.0"]).replace('  license "MIT"', '  version "1.0.0"\n  license "MIT"');
+  expect(parseFormula(src, "nvmr").version).toBe("1.0.0");
+});
+
+test("formula version inference rejects conflicting platform release tags", () => {
+  expect(() => parseFormula(releaseFormula(["v1.0.0", "v2.0.0"]), "nvmr"))
+    .toThrow("conflicting release versions");
+});
+
+test("formula version inference fails clearly for unsupported URLs", () => {
+  const src = releaseFormula(["latest"]);
+  expect(() => parseFormula(src, "nvmr")).toThrow("set an explicit version");
+  expect(() => parseFormula(releaseFormula(["v1.2.3invalid"]), "nvmr"))
+    .toThrow("set an explicit version");
+  const archive = releaseFormula(["v1.0.0"]).replaceAll("github.com", "example.com");
+  expect(() => parseFormula(archive, "nvmr")).toThrow("set an explicit version");
+});

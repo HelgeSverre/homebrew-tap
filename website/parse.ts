@@ -97,16 +97,45 @@ export function osLabel(cells: Cell[]): string {
   return parts.join(" + ");
 }
 
+/** An explicit version wins; pinned GitHub release tags can supply an omitted one. */
+function formulaVersion(src: string, platforms: Map<Cell, Artifact>): string {
+  const explicit = readFieldOpt(src, "version");
+  if (explicit !== undefined) return explicit;
+
+  const unsupported = () => new Error("cannot infer formula version from release URLs; set an explicit version");
+  const versions = new Set<string>();
+  for (const { url } of platforms.values()) {
+    let release: URL;
+    try {
+      release = new URL(url);
+    } catch {
+      throw unsupported();
+    }
+    const tag = release.hostname === "github.com"
+      ? release.pathname.match(/^\/[^/]+\/[^/]+\/releases\/download\/([^/]+)\//)?.[1]
+      : undefined;
+    const version = tag?.match(/^v?(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?)$/)?.[1];
+    if (!version) throw unsupported();
+    versions.add(version);
+  }
+  if (versions.size === 0) throw unsupported();
+  if (versions.size !== 1) {
+    throw new Error("conflicting release versions across formula platforms; set an explicit version");
+  }
+  return [...versions][0];
+}
+
 export function parseFormula(src: string, id: string): Formula {
+  const platforms = parsePlatforms(src);
   return {
     kind: "formula",
     id,
     name: id,
     desc: readField(src, "desc"),
     homepage: readField(src, "homepage"),
-    version: readField(src, "version"),
+    version: formulaVersion(src, platforms),
     license: readFieldOpt(src, "license") ?? "—",
-    platforms: parsePlatforms(src),
+    platforms,
   };
 }
 
