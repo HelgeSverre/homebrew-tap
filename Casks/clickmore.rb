@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 cask "clickmore" do
-  version "0.1.2"
-  sha256 "2b11bcaac248d40a936ba9801a354accbffcf8242447a464b73c7ec1f6af770d"
+  version "0.1.3"
+  sha256 "029b33a531a88c48b50303571b7b3bb097a48c4c493cbf8fc9dca5f01ecfde4f"
 
   url "https://github.com/HelgeSverre/clickmore/releases/download/v#{version}/ClickMore-#{version}-universal.zip"
   name "ClickMore"
