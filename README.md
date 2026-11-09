@@ -32,6 +32,7 @@ brew tap helgesverre/tap
 |------|-------------|---------|
 | [clickmore](https://github.com/HelgeSverre/clickmore) | Floating trigger that clicks multiple screen positions in sequence | `brew install --cask helgesverre/tap/clickmore` |
 | [fence](https://github.com/HelgeSverre/fence) | Desktop Markdown editor with live preview, built with Elm and Electron | `brew install --cask helgesverre/tap/fence` |
+| [helge-terminal](https://tap.helgesver.re/) | Native terminal with split panes, Obel Mono, and Metal rendering | `brew install --cask helgesverre/tap/helge-terminal` |
 | [sourcefour](https://github.com/HelgeSverre/sourcefour) | Fast, native Git history browser you launch from your terminal | `brew install --cask helgesverre/tap/sourcefour` |
 | [zest](https://github.com/HelgeSverre/zest) | Fast native file browser with background indexing | `brew install --cask helgesverre/tap/zest` |
 
@@ -50,4 +51,4 @@ brew update && brew upgrade helgesverre/tap/<formula-name>
 
 ## How It Works
 
-Formulae and casks are published automatically by each project's release workflow (most via [cargo-dist](https://github.com/axodotdev/cargo-dist)) when a new version is tagged in the source repository. No manual updates needed.
+Most formulae and casks are updated by their project's release workflow when a version is tagged. Signed app downloads for private projects can be published as versioned releases in this tap.
