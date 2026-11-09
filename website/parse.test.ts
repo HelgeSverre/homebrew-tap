@@ -228,6 +228,18 @@ test("cask: a bare url with no arch block is universal (both mac cells)", () => 
   expect(p.get("mac-x86_64")).toEqual({ url: "https://x/App-universal.dmg", sha256: "cccc" });
 });
 
+for (const [required, expected] of [["arm64", "mac-arm64"], ["x86_64", "mac-x86_64"]] as const) {
+  test(`cask: an explicit ${required} dependency restricts a bare download URL`, () => {
+    const p = parseCaskPlatforms(`
+    version "1.0.0"
+    sha256 "cccc"
+    url "https://x/App.zip"
+    depends_on arch: :${required}
+    app "App.app"`);
+    expect([...p.keys()]).toEqual([expected]);
+  });
+}
+
 test("cask: sha256 :no_check still records the platform", () => {
   const p = parseCaskPlatforms(`
   version :latest

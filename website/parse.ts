@@ -142,12 +142,13 @@ export function parseFormula(src: string, id: string): Formula {
 /**
  * Cask platforms. A cask is macOS by definition, so only the arch context
  * matters: `on_arm` / `on_intel` blocks each carry a `url`; a bare `url` with
- * no arch block is a universal build and counts for both. Hashes live in a
+ * no arch block counts for both unless `depends_on arch:` restricts it. Hashes live in a
  * single `sha256 arm: "…", intel: "…"` stanza (possibly wrapped over two
  * lines), a plain `sha256 "…"`, or `sha256 :no_check` — the site never renders
  * them, so a missing hash must not drop the platform.
  */
 export function parseCaskPlatforms(src: string): Map<Cell, Artifact> {
+  const requiredArch = src.match(/^\s*depends_on\s+arch:\s*:(arm64|x86_64)\b/m)?.[1];
   const sha = (label: string) => src.match(new RegExp(`\\b${label}:\\s*"([^"]*)"`))?.[1];
   const plain = src.match(/^\s*sha256\s+"([^"]*)"/m)?.[1];
   const shaFor: Record<"arm64" | "x86_64", string> = {
@@ -164,7 +165,9 @@ export function parseCaskPlatforms(src: string): Map<Cell, Artifact> {
     const u = line.match(/\burl\s+"([^"]+)"/);
     if (!u) continue;
     const arches: ("arm64" | "x86_64")[] = arch ? [arch] : ["arm64", "x86_64"];
-    for (const a of arches) out.set(`mac-${a}` as Cell, { url: u[1], sha256: shaFor[a] });
+    for (const a of arches) {
+      if (!requiredArch || a === requiredArch) out.set(`mac-${a}` as Cell, { url: u[1], sha256: shaFor[a] });
+    }
   }
   return out;
 }
