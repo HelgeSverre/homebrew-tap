@@ -22,7 +22,7 @@ jobs:
 
           ## Install
 
-          ```bash
+          ```shell
           brew tap helgesverre/tap
           ```
 
@@ -67,7 +67,7 @@ jobs:
 
           ## Usage
 
-          ```bash
+          ```shell
           # Install a formula
           brew install helgesverre/tap/<formula-name>
 

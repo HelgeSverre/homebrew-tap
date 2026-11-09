@@ -4,7 +4,7 @@ Homebrew formulae for tools by [Helge Sverre](https://github.com/HelgeSverre).
 
 ## Install
 
-```bash
+```shell
 brew tap helgesverre/tap
 ```
 
@@ -38,7 +38,7 @@ brew tap helgesverre/tap
 
 ## Usage
 
-```bash
+```shell
 # Install a formula
 brew install helgesverre/tap/<formula-name>
 
