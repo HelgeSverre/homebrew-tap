@@ -5,7 +5,7 @@ cask "helge-terminal" do
   url "https://github.com/HelgeSverre/homebrew-tap/releases/download/helge-terminal-v#{version}/HelgeTerminal-#{version}-arm64.zip"
   name "Helge Terminal"
   desc "Native terminal with split panes, Obel Mono, and Metal rendering"
-  homepage "https://tap.helgesver.re/"
+  homepage "https://github.com/HelgeSverre/terminal"
 
   livecheck do
     url "https://github.com/HelgeSverre/homebrew-tap/releases"
