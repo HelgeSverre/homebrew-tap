@@ -68,3 +68,8 @@ for (const id of caskIds) {
     }
   });
 }
+
+test("Helge Terminal advertises only its shipped Apple Silicon build", () => {
+  const terminal = parseCask(readFileSync(join(CASK_DIR, "helge-terminal.rb"), "utf8"), "helge-terminal");
+  expect([...terminal.platforms.keys()]).toEqual(["mac-arm64"]);
+});

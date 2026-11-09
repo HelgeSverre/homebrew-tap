@@ -80,7 +80,7 @@ jobs:
 
           ## How It Works
 
-          Formulae and casks are published automatically by each project's release workflow (most via [cargo-dist](https://github.com/axodotdev/cargo-dist)) when a new version is tagged in the source repository. No manual updates needed.
+          Most formulae and casks are updated by their project's release workflow when a version is tagged. Signed app downloads for private projects can be published as versioned releases in this tap.
           FOOTER
 
       - name: Commit if changed
