@@ -16,4 +16,11 @@ cask "helge-terminal" do
   depends_on macos: :sequoia
 
   app "Helge Terminal.app"
+
+  zap trash: [
+    "~/Library/Caches/no.helgesverre.terminal",
+    "~/Library/HTTPStorages/no.helgesverre.terminal",
+    "~/Library/Preferences/no.helgesverre.terminal.plist",
+    "~/Library/Saved Application State/no.helgesverre.terminal.savedState",
+  ]
 end
