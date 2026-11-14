@@ -1,7 +1,7 @@
 cask "helge-terminal" do
-  version "0.4.3"
-  sha256 "9b105733ff03a3cfda7d3790fa3067cbf5b9ea7c4e8ea6703650bbead7d4f8e7"
-  url "https://github.com/HelgeSverre/terminal/releases/download/v0.4.3/HelgeTerminal-0.4.3-arm64.zip"
+  version "0.5.0"
+  sha256 "47d5c7adf1f3fddc268762736ef33d06d27f2f4f4addcaa9248fcb1ef1f1eca1"
+  url "https://github.com/HelgeSverre/terminal/releases/download/v0.5.0/HelgeTerminal-0.5.0-arm64.zip"
   name "Helge Terminal"
   desc "Native terminal with split panes, Obel Mono, and Metal rendering"
   homepage "https://github.com/HelgeSverre/terminal"
