@@ -12,8 +12,7 @@ cask "helge-terminal" do
     strategy :github_releases
   end
 
-  depends_on arch: :arm64
-  depends_on macos: :sequoia
+  depends_on macos: :sonoma
 
   app "Helge Terminal.app"
 
