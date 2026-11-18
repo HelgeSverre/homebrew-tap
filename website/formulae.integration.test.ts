@@ -69,7 +69,9 @@ for (const id of caskIds) {
   });
 }
 
-test("Helge Terminal advertises only its shipped Apple Silicon build", () => {
-  const terminal = parseCask(readFileSync(join(CASK_DIR, "helge-terminal.rb"), "utf8"), "helge-terminal");
-  expect([...terminal.platforms.keys()]).toEqual(["mac-arm64"]);
-});
+for (const name of ["helge-terminal", "helge-launcher"]) {
+  test(`${name} advertises its universal build on both Mac architectures`, () => {
+    const cask = parseCask(readFileSync(join(CASK_DIR, `${name}.rb`), "utf8"), name);
+    expect([...cask.platforms.keys()].sort()).toEqual(["mac-arm64", "mac-x86_64"]);
+  });
+}
