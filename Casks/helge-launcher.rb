@@ -1,6 +1,6 @@
 cask "helge-launcher" do
-  version "0.1.0"
-  sha256 "a1e48d9a11a107bc508775fe309ea099efe16e736d66dafce64a7999142197d7"
+  version "0.1.1"
+  sha256 "799ebfbda13d604d0ba5e2941e1088d25355791b7e2eba3a03cdf18266f92043"
   url "https://github.com/HelgeSverre/helge-launcher/releases/download/v#{version}/HelgeLauncher-#{version}-universal.zip"
   name "Helge Launcher"
   desc "Keyboard launcher for apps, CleanShot, clipboard, snippets, 1Password and AI"
