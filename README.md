@@ -32,6 +32,7 @@ brew tap helgesverre/tap
 |------|-------------|---------|
 | [clickmore](https://github.com/HelgeSverre/clickmore) | Floating trigger that clicks multiple screen positions in sequence | `brew install --cask helgesverre/tap/clickmore` |
 | [fence](https://github.com/HelgeSverre/fence) | Desktop Markdown editor with live preview, built with Elm and Electron | `brew install --cask helgesverre/tap/fence` |
+| [helge-launcher](https://github.com/HelgeSverre/helge-launcher) | Keyboard launcher for apps, CleanShot, clipboard, snippets, 1Password and AI | `brew install --cask helgesverre/tap/helge-launcher` |
 | [helge-terminal](https://github.com/HelgeSverre/terminal) | Native terminal with split panes, Obel Mono, and Metal rendering | `brew install --cask helgesverre/tap/helge-terminal` |
 | [sourcefour](https://github.com/HelgeSverre/sourcefour) | Fast, native Git history browser you launch from your terminal | `brew install --cask helgesverre/tap/sourcefour` |
 | [zest](https://github.com/HelgeSverre/zest) | Fast native file browser with background indexing | `brew install --cask helgesverre/tap/zest` |
