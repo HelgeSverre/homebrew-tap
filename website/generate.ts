@@ -11,8 +11,6 @@ import { parseFormula, parseCask, homepageHost, osLabel, type Formula, type Cell
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = dirname(HERE);
-const FORMULA_DIR = join(ROOT, "Formula");
-const CASK_DIR = join(ROOT, "Casks");
 const TEMPLATE = join(HERE, "template.html");
 const DIST = join(ROOT, "dist");
 const CNAME = join(HERE, "CNAME");
@@ -29,19 +27,36 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-function loadDir(dir: string, parse: (src: string, id: string) => Formula): Formula[] {
+export interface Skipped {
+  file: string;
+  error: string;
+}
+
+// A file the parser can't read is left off the page; it never stops the others from publishing.
+function loadDir(dir: string, parse: (src: string, id: string) => Formula, skipped: Skipped[]): Formula[] {
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
     .filter((f) => f.endsWith(".rb"))
     .sort()
-    .map((f) => parse(readFileSync(join(dir, f), "utf8"), basename(f, ".rb")));
+    .flatMap((f) => {
+      const file = join(dir, f);
+      try {
+        return [parse(readFileSync(file, "utf8"), basename(f, ".rb"))];
+      } catch (e) {
+        skipped.push({ file, error: e instanceof Error ? e.message : String(e) });
+        return [];
+      }
+    });
 }
 
-function loadItems(): Formula[] {
+export function loadItems(root = ROOT): { items: Formula[]; skipped: Skipped[] } {
+  const skipped: Skipped[] = [];
   // One mixed alphabetical index; casks are marked with an APP tag.
-  return [...loadDir(FORMULA_DIR, parseFormula), ...loadDir(CASK_DIR, parseCask)].sort((a, b) =>
-    a.id.localeCompare(b.id),
-  );
+  const items = [
+    ...loadDir(join(root, "Formula"), parseFormula, skipped),
+    ...loadDir(join(root, "Casks"), parseCask, skipped),
+  ].sort((a, b) => a.id.localeCompare(b.id));
+  return { items, skipped };
 }
 
 function title(): string {
@@ -83,7 +98,12 @@ function renderItem(item: string, f: Formula, page: number): string {
 }
 
 function main() {
-  const formulae = loadItems();
+  const { items: formulae, skipped } = loadItems();
+  for (const s of skipped) {
+    const rel = s.file.slice(ROOT.length + 1);
+    console.log(`::warning file=${rel}::left off the site: ${s.error}`);
+  }
+  if (formulae.length === 0) throw new Error("no formula or cask could be read; not publishing an empty site");
   const { shell, item } = extractItemTemplate(readFileSync(TEMPLATE, "utf8"));
 
   const rows = formulae.map((f, i) => renderItem(item, f, FIRST_PAGE + i)).join("\n");
@@ -106,7 +126,7 @@ function main() {
   // Tell GitHub Pages not to run Jekyll (otherwise underscore-prefixed paths break).
   writeFileSync(join(DIST, ".nojekyll"), "");
 
-  console.log(`wrote ${formulae.length} items to ${join(DIST, "index.html")}`);
+  console.log(`wrote ${formulae.length} items to ${join(DIST, "index.html")}` + (skipped.length ? `, skipped ${skipped.length}` : ""));
 }
 
-main();
+if (import.meta.main) main();
