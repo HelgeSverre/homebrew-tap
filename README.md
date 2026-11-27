@@ -22,6 +22,7 @@ brew tap helgesverre/tap
 | [nvmr](https://github.com/HelgeSverre/nvmr) | Native drop-in replacement for nvm | `brew install helgesverre/tap/nvmr` |
 | [sema-lang](https://sema-lang.com) | Sema — a Lisp dialect with first-class LLM primitives | `brew install helgesverre/tap/sema-lang` |
 | [sourcefour](https://github.com/HelgeSverre/sourcefour) | A fast, native Git history browser you launch from your terminal | `brew install helgesverre/tap/sourcefour` |
+| [speak](https://github.com/HelgeSverre/speak) | Offline text-to-speech with the command-line surface of macOS say | `brew install helgesverre/tap/speak` |
 | [sql-splitter](https://github.com/helgesverre/sql-splitter) | High-performance CLI tool for splitting large SQL dump files into individual table files | `brew install helgesverre/tap/sql-splitter` |
 | [strek](https://github.com/HelgeSverre/strek) | Native vector editor for logos and icons | `brew install helgesverre/tap/strek` |
 | [token](https://token-editor.com) | A fast, minimal multi-cursor text editor with syntax highlighting | `brew install helgesverre/tap/token` |
